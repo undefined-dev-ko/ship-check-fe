@@ -2,6 +2,7 @@ import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
 import "./App.css";
 import React from "react";
+import Layout from "./containers/Layout";
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -12,7 +13,7 @@ function App() {
   return (
     <React.Fragment>
       <GlobalStyle />
-      <div>hello typed react world</div>
+      <Layout>content</Layout>
     </React.Fragment>
   );
 }
