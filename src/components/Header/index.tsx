@@ -20,11 +20,13 @@ function Header() {
           <div className="logo-txt-en">Ship-Check</div>
           <div className="logo-txt-kr">쉽첵</div>
         </Styled.Logo>
-        <Styled.ProfileImage />
-        <MenuItem
-          label={isLoggedIn ? 'Logout' : 'Login'}
-          onClick={isLoggedIn ? handleLogoutClick : handleLoginClick}
-        ></MenuItem>
+        <div className="right-container">
+          {isLoggedIn && <Styled.ProfileImage />}
+          <MenuItem
+            label={isLoggedIn ? 'Logout' : 'Login'}
+            onClick={isLoggedIn ? handleLogoutClick : handleLoginClick}
+          ></MenuItem>
+        </div>
       </Styled.Header>
     </Styled.Container>
   );

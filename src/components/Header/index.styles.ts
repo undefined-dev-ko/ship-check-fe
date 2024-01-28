@@ -3,6 +3,11 @@ import styled from 'styled-components';
 const Container = styled.div`
   width: 100%;
   background-color: pink;
+
+  .right-container {
+    display: flex;
+    gap: 20px;
+  }
 `;
 
 const Header = styled.header`
@@ -38,6 +43,8 @@ const Logo = styled.div`
 const ProfileImage = styled.div`
   width: 60px;
   height: 60px;
+  background-color: #fff;
+  border-radius: 100%;
 `;
 
 export default { Container, Header, Logo, ProfileImage };
