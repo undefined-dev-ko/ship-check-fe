@@ -1,3 +1,3 @@
 export const COLOR = {
-  primaryPurPle: '#AD00FF',
+  primaryPurple: '#AD00FF',
 };

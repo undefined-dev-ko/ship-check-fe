@@ -31,7 +31,6 @@ const Logo = styled.div`
   }
   .logo-txt-en,
   .logo-txt-kr {
-    font-family: 'Inter';
     font-size: 30px;
     font-weight: 700;
   }

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { COLOR } from '../../styles/constants';
 
 const Container = styled.button`
-  background-color: ${COLOR.primaryPurPle};
+  background-color: ${COLOR.primaryPurple};
   color: #f5f5f5;
   border: 0;
   border-radius: 8px;
