@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { COLOR } from '../../styles/constants';
 
 const Container = styled.div`
   width: 100%;
@@ -10,7 +11,9 @@ const Footer = styled.footer`
   flex-direction: row;
   justify-content: space-between;
   padding: 80px;
-  color: #cfcfcf;
+  color: ${COLOR.white};
+  word-break: keep-all;
+  white-space: nowrap;
 
   .left-container {
     display: flex;
@@ -22,36 +25,53 @@ const Footer = styled.footer`
     font-weight: 600;
   }
 
-  .participant-container {
+  dl {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    dd {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+
+      div {
+        display: flex;
+        flex-direction: row;
+        gap: 5px;
+      }
+    }
+  }
+
+  .member-container {
     display: flex;
     flex-direction: row;
     gap: 12px;
-    :not(:last-of-type) {
-      margin-bottom: 12px;
-    }
+  }
 
-    .participant :not(:last-of-type) {
-      margin-bottom: 12px;
-    }
+  @media (max-width: 576px) {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
   }
 `;
 
-const Participants = styled.div`
+const MemberList = styled.div`
   display: flex;
   flex-direction: row;
   gap: 24px;
 `;
 
 const Title = styled.div`
-  color: #fff;
+  color: ${COLOR.white};
   font-size: 40px;
   font-weight: 700;
 `;
 
-const CopyRight = styled.div`
+const CopyRight = styled.p`
   display: flex;
   align-items: flex-end;
-  color: #cfcfcf;
+  color: ${COLOR.gray};
 `;
 
-export default { Container, Footer, Participants, Title, CopyRight };
+export default { Container, Footer, MemberList, Title, CopyRight };

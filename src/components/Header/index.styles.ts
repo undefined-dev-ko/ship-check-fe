@@ -15,6 +15,7 @@ const Header = styled.header`
   flex-direction: row;
   justify-content: space-between;
   padding: 24px 30px;
+  white-space: nowrap;
 `;
 
 const Logo = styled.div`
