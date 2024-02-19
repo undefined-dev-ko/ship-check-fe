@@ -1,8 +1,9 @@
 import styled from 'styled-components';
+import { COLOR } from '../../styles/constants';
 
 const Container = styled.div`
   width: 100%;
-  background-color: pink;
+  background-color: ${COLOR.white};
 
   .right-container {
     display: flex;

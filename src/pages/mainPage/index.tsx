@@ -1,10 +1,14 @@
+import Notice from '../../components/Notice';
 import Layout from '../../containers/Layout';
+import Styled from './index.styles';
 
 export default function MainPage() {
   return (
     <>
       <Layout>
-        <div>content</div>
+        <Styled.MainPageContainer>
+          <Notice />
+        </Styled.MainPageContainer>
       </Layout>
     </>
   );
