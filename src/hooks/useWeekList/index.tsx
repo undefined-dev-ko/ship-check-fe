@@ -5,10 +5,8 @@ const MAX_DATE_LENGTH = 35;
 const MAX_DAY_LENTH = 7;
 const DAY_NAMES = ['일', '월', '화', '수', '목', '금', '토'];
 
-const useCalendar = ({ initialDate }: { initialDate?: Date }) => {
-  const [currentDate, setCurrentDate] = React.useState(
-    initialDate || new Date(),
-  );
+const useWeekList = (initialDate = new Date()) => {
+  const [currentDate, setCurrentDate] = React.useState(initialDate);
 
   const weekList: number[][] = [...new Array(MAX_DATE_LENGTH)]
     .map((_, i) => i + 1)
@@ -58,4 +56,4 @@ const useCalendar = ({ initialDate }: { initialDate?: Date }) => {
   };
 };
 
-export default useCalendar;
+export default useWeekList;
