@@ -1,14 +1,18 @@
 import styled from 'styled-components';
 
-const ContainerOuter = styled.div`
+const Container = styled.div`
   border: 2px solid #e6e6e6;
   border-radius: 24px;
-  width: 552px;
-  height: 593px;
+  background: #fff;
+
+  width: 100%;
 
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  padding-top: 28px;
+  gap: 24px 0;
 `;
 
 const Header = styled.div`
@@ -17,7 +21,6 @@ const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 28px 17px 28px;
 
   .round_box {
     width: 58px;
@@ -43,61 +46,61 @@ const Header = styled.div`
   }
 `;
 
-const Divider = styled.div`
-  width: 460px;
-  margin: 0px 17px;
-  height: 0px;
-  border: 2px solid rgba(163, 163, 166, 0.8);
-`;
+const Content = styled.div`
+  gap: 16px 0;
 
-const DateContainer = styled.div`
-  width: 476px;
   display: flex;
+  flex-direction: column;
+  align-items: center;
 
-  margin-top: 21px;
-
-  .day {
-    width: 68px;
-    height: 68px;
-
-    font-family: 'Poppins';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 26px;
-    line-height: 39px;
+  .day_line {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    .day {
+      width: 68px;
+      height: 68px;
 
-    color: #b3b3b3;
+      font-family: 'Poppins';
+      font-style: normal;
+      font-weight: 700;
+      font-size: 26px;
+      line-height: 39px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      color: #b3b3b3;
+    }
   }
-`;
 
-const WeekContainer = styled.div`
-  width: 476px;
-  display: flex;
-
-  .date {
-    width: 68px;
-    height: 68px;
-
-    font-family: 'Poppins';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 28px;
-    line-height: 42px;
+  .date_line {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    .date_box {
+      width: 68px;
+      height: 68px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
-    color: #b3b3b3;
+      .date {
+        width: 48px;
+        height: 48px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        font-family: 'Poppins';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 28px;
+        line-height: 42px;
+        color: #1b1b1b;
+      }
+    }
   }
 `;
 
 export default {
-  ContainerOuter,
+  Container,
   Header,
-  Divider,
-  DateContainer,
-  WeekContainer,
+  Content,
 };

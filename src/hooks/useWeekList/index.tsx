@@ -26,7 +26,7 @@ const useWeekList = (initialDate = new Date()) => {
     )
     .filter((v) => !!v.length);
 
-  const weekPreviousMonthPadding: number[] = [
+  const weekPrevMonthPadding: number[] = [
     ...new Array(MAX_DAY_LENTH - weekList[0].length),
   ]
     .map((_, i) => i + 1)
@@ -50,7 +50,7 @@ const useWeekList = (initialDate = new Date()) => {
     currentDate: currentDate,
     setCurrentDate: setCurrentDate,
     weekList,
-    weekPreviousMonthPadding,
+    weekPrevMonthPadding,
     weekNextMonthPadding,
     dayNames: DAY_NAMES,
   };
