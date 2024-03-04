@@ -3,56 +3,80 @@ import LeftArrowIcon from '../SvgIcons/LeftArrowIcon';
 import RightArrowIcon from '../SvgIcons/RightArrowIcon';
 import Styled from './index.styles';
 import dayjs from 'dayjs';
-import { getDateStyle } from './util';
+import DateBox from './DateBox';
+import { toYYYYMMDD } from './util';
+import DayBox from './DayBox';
+import useWeekList from '../../hooks/useWeekList';
 
-function Calendar({
-  title,
-  currentDate,
-  dayNames,
-  weekList,
-  weekNextMonthPadding,
-  weekPrevMonthPadding,
-  onNextButtonClick,
-  onPrevButtonClick,
-  onDateClick,
-  onPrevMonthDateClick,
-  onNextMonthDateClick,
-}: {
-  title: string;
-  currentDate: Date;
-  dayNames: string[];
-  weekList: number[][];
-  weekNextMonthPadding?: number[];
-  weekPrevMonthPadding?: number[];
-  onNextButtonClick: () => void;
-  onPrevButtonClick: () => void;
-  onDateClick?: (date: number) => void;
-  onPrevMonthDateClick?: (date: number) => void;
-  onNextMonthDateClick?: (date: number) => void;
+const DATE_COMPARE_FORMAT = 'YYYYMMDD';
+function Calendar({}: // title,
+// baseDate,
+// dayNames,
+// weekList,
+// weekNextMonthPadding,
+// weekPrevMonthPadding,
+// onNextButtonClick,
+// onPrevButtonClick,
+// onDateClick,
+// onPrevMonthDateClick,
+// onNextMonthDateClick,
+{
+  // title: string;
+  // baseDate: Date;
+  // dayNames: string[];
+  // weekList: number[][];
+  // weekNextMonthPadding?: number[];
+  // weekPrevMonthPadding?: number[];
+  // onNextButtonClick: () => void;
+  // onPrevButtonClick: () => void;
+  // onDateClick?: (date: number) => void;
+  // onPrevMonthDateClick?: (date: number) => void;
+  // onNextMonthDateClick?: (date: number) => void;
 }) {
-  const [hoveredDate, setHoveredDate] = useState<Date | undefined>();
-  console.log(hoveredDate);
+  const {
+    baseDate,
+    dayNames,
+    setBaseDate,
+    weekList,
+    weekNextMonthPadding,
+    weekPrevMonthPadding,
+  } = useWeekList();
+
+  const baseYYYYMMDD = dayjs(baseDate).format('YYYYMMDD');
+  const todayYYYYMMDD = dayjs().format('YYYYMMDD');
   return (
     <Styled.Container>
       <Styled.Header>
-        <div className="round_box" onClick={onPrevButtonClick}>
+        <div
+          className="round_box"
+          onClick={() => {
+            setBaseDate(
+              dayjs(baseDate).subtract(1, 'month').startOf('month').toDate(),
+            );
+          }}
+        >
           <LeftArrowIcon />
         </div>
 
-        <p className="title">{title}</p>
+        <p className="title">{dayjs(baseDate).format('YYYY년 MM월')}</p>
 
-        <div className="round_box" onClick={onNextButtonClick}>
+        <div
+          className="round_box"
+          onClick={() => {
+            setBaseDate(
+              dayjs(baseDate).add(1, 'month').startOf('month').toDate(),
+            );
+          }}
+        >
           <RightArrowIcon />
         </div>
       </Styled.Header>
 
       <Styled.Content>
         {/** 요일명 출력 */}
-        <div className="day_line">
+        <div className="flex_horizontal">
           {dayNames.map((v, i) => (
-            <div className="day" key={i}>
-              {v}
-            </div>
+            <DayBox dayName={v} />
           ))}
         </div>
 
@@ -60,7 +84,7 @@ function Calendar({
           {/** 주 출력 */}
           {weekList.map((week, i) => (
             <div
-              className="date_line"
+              className="flex_horizontal"
               key={i}
               style={{
                 justifyContent:
@@ -74,67 +98,76 @@ function Calendar({
               {/** 일 출력(이전달) */}
               {i === 0 &&
                 weekPrevMonthPadding &&
-                weekPrevMonthPadding.map((v) => (
-                  <div className="date_box" key={v}>
-                    <div
-                      className="date"
-                      onMouseEnter={() => {
-                        setHoveredDate(
-                          dayjs(currentDate)
-                            .subtract(1, 'month')
-                            .set('date', v)
-                            .toDate(),
-                        );
+                weekPrevMonthPadding.map((v) => {
+                  const date = dayjs(baseDate)
+                    .subtract(1, 'month')
+                    .set('date', v);
+                  return (
+                    <DateBox
+                      date={date.toDate()}
+                      onClick={() => {
+                        setBaseDate(date.toDate());
                       }}
-                      onMouseLeave={() => {
-                        setHoveredDate(undefined);
-                      }}
-                    >
-                      {v}
-                    </div>
-                  </div>
-                ))}
+                      isClicked={
+                        date.format(DATE_COMPARE_FORMAT) === baseYYYYMMDD
+                      }
+                      isToday={
+                        date.format(DATE_COMPARE_FORMAT) === todayYYYYMMDD
+                      }
+                      isDisabled={
+                        date.format(DATE_COMPARE_FORMAT) < todayYYYYMMDD
+                      }
+                      isReserved={false}
+                      key={v}
+                    />
+                  );
+                })}
               {/** 일 출력 */}
-              {week.map((v) => (
-                <div className="date_box" key={v}>
-                  <div
-                    className="date"
-                    onMouseEnter={() => {
-                      setHoveredDate(
-                        dayjs(currentDate).set('date', v).toDate(),
-                      );
+              {week.map((v) => {
+                const date = dayjs(baseDate).set('date', v);
+                return (
+                  <DateBox
+                    date={date.toDate()}
+                    onClick={() => {
+                      setBaseDate(date.toDate());
                     }}
-                    onMouseLeave={() => {
-                      setHoveredDate(undefined);
-                    }}
-                  >
-                    {v}
-                  </div>
-                </div>
-              ))}
+                    isClicked={
+                      date.format(DATE_COMPARE_FORMAT) === baseYYYYMMDD
+                    }
+                    isToday={date.format(DATE_COMPARE_FORMAT) === todayYYYYMMDD}
+                    isDisabled={
+                      date.format(DATE_COMPARE_FORMAT) < todayYYYYMMDD
+                    }
+                    isReserved={false}
+                    key={v}
+                  />
+                );
+              })}
               {/** 일 출력(다음달) */}
               {i === weekList.length - 1 &&
                 weekNextMonthPadding &&
-                weekNextMonthPadding.map((v) => (
-                  <div className="date_box" key={v}>
-                    <div
-                      className="date"
-                      onMouseEnter={() => {
-                        setHoveredDate(
-                          dayjs(currentDate)
-                            .add(1, 'month')
-                            .set('date', v)
-                            .toDate(),
-                        );
+                weekNextMonthPadding.map((v) => {
+                  const date = dayjs(baseDate).add(1, 'month').set('date', v);
+                  return (
+                    <DateBox
+                      date={date.toDate()}
+                      onClick={() => {
+                        setBaseDate(date.toDate());
                       }}
-                      onMouseLeave={() => {
-                        setHoveredDate(undefined);
-                      }}
-                    >
-                      {v}
-                    </div>
-                  </div>
-                ))}
+                      isClicked={
+                        date.format(DATE_COMPARE_FORMAT) === baseYYYYMMDD
+                      }
+                      isToday={
+                        date.format(DATE_COMPARE_FORMAT) === todayYYYYMMDD
+                      }
+                      isDisabled={
+                        date.format(DATE_COMPARE_FORMAT) < todayYYYYMMDD
+                      }
+                      isReserved={false}
+                      key={v}
+                    />
+                  );
+                })}
             </div>
           ))}
         </div>

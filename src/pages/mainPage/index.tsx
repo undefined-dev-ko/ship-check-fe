@@ -6,14 +6,14 @@ import Calendar from '../../components/Calendar';
 import useCalendar from '../../hooks/useWeekList';
 
 function MainPage() {
-  const {
-    currentDate,
-    dayNames,
-    setCurrentDate,
-    weekList,
-    weekNextMonthPadding,
-    weekPrevMonthPadding,
-  } = useCalendar();
+  // const {
+  //   baseDate,
+  //   dayNames,
+  //   setBaseDate,
+  //   weekList,
+  //   weekNextMonthPadding,
+  //   weekPrevMonthPadding,
+  // } = useCalendar();
 
   return (
     <>
@@ -22,21 +22,25 @@ function MainPage() {
           <Notice />
           <div>content</div>
           <Calendar
-            title={dayjs(currentDate).format('YYYY년 MM월')}
-            currentDate={currentDate}
-            dayNames={dayNames}
-            weekList={weekList}
-            weekNextMonthPadding={weekNextMonthPadding}
-            weekPrevMonthPadding={weekPrevMonthPadding}
-            onPrevButtonClick={() => {
-              setCurrentDate(dayjs(currentDate).subtract(1, 'month').toDate());
-            }}
-            onNextButtonClick={() => {
-              setCurrentDate(dayjs(currentDate).add(1, 'month').toDate());
-            }}
-            onDateClick={undefined}
-            onNextMonthDateClick={undefined}
-            onPrevMonthDateClick={undefined}
+          // title={dayjs(baseDate).format('YYYY년 MM월')}
+          // baseDate={baseDate}
+          // dayNames={dayNames}
+          // weekList={weekList}
+          // weekNextMonthPadding={weekNextMonthPadding}
+          // weekPrevMonthPadding={weekPrevMonthPadding}
+          // onPrevButtonClick={() => {
+          //   setBaseDate(
+          //     dayjs(baseDate).subtract(1, 'month').startOf('month').toDate(),
+          //   );
+          // }}
+          // onNextButtonClick={() => {
+          //   setBaseDate(
+          //     dayjs(baseDate).add(1, 'month').startOf('month').toDate(),
+          //   );
+          // }}
+          // onDateClick={undefined}
+          // onNextMonthDateClick={undefined}
+          // onPrevMonthDateClick={undefined}
           />
         </Styled.MainPageContainer>
       </Layout>

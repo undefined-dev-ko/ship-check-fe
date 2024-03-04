@@ -53,49 +53,9 @@ const Content = styled.div`
   flex-direction: column;
   align-items: center;
 
-  .day_line {
+  .flex_horizontal {
     display: flex;
-    .day {
-      width: 68px;
-      height: 68px;
-
-      font-family: 'Poppins';
-      font-style: normal;
-      font-weight: 700;
-      font-size: 26px;
-      line-height: 39px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      color: #b3b3b3;
-    }
-  }
-
-  .date_line {
-    display: flex;
-    .date_box {
-      width: 68px;
-      height: 68px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      .date {
-        width: 48px;
-        height: 48px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        font-family: 'Poppins';
-        font-style: normal;
-        font-weight: 500;
-        font-size: 28px;
-        line-height: 42px;
-        color: #1b1b1b;
-      }
-    }
+    flex-direction: row;
   }
 `;
 

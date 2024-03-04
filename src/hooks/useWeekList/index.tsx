@@ -6,14 +6,14 @@ const MAX_DAY_LENTH = 7;
 const DAY_NAMES = ['일', '월', '화', '수', '목', '금', '토'];
 
 const useWeekList = (initialDate = new Date()) => {
-  const [currentDate, setCurrentDate] = React.useState(initialDate);
+  const [baseDate, setBaseDate] = React.useState(initialDate);
 
   const weekList: number[][] = [...new Array(MAX_DATE_LENGTH)]
     .map((_, i) => i + 1)
     .reduce(
       (prev, date) => {
-        const day = dayjs(currentDate).set('date', date);
-        if (day.month() !== currentDate.getMonth()) {
+        const day = dayjs(baseDate).set('date', date);
+        if (day.month() !== baseDate.getMonth()) {
           return prev;
         }
         prev[prev.length - 1].push(date);
@@ -31,10 +31,7 @@ const useWeekList = (initialDate = new Date()) => {
   ]
     .map((_, i) => i + 1)
     .map((dateDifference) =>
-      dayjs(currentDate)
-        .startOf('month')
-        .subtract(dateDifference, 'day')
-        .date(),
+      dayjs(baseDate).startOf('month').subtract(dateDifference, 'day').date(),
     )
     .reverse();
 
@@ -43,12 +40,12 @@ const useWeekList = (initialDate = new Date()) => {
   ]
     .map((_, i) => i + 1)
     .map((dateDifference) =>
-      dayjs(currentDate).endOf('month').add(dateDifference, 'day').date(),
+      dayjs(baseDate).endOf('month').add(dateDifference, 'day').date(),
     );
 
   return {
-    currentDate: currentDate,
-    setCurrentDate: setCurrentDate,
+    baseDate: baseDate,
+    setBaseDate: setBaseDate,
     weekList,
     weekPrevMonthPadding,
     weekNextMonthPadding,
