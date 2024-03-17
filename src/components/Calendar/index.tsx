@@ -9,38 +9,39 @@ import DayBox from './DayBox';
 import useWeekList from '../../hooks/useWeekList';
 
 const DATE_COMPARE_FORMAT = 'YYYYMMDD';
-function Calendar({}: // title,
-// baseDate,
-// dayNames,
-// weekList,
-// weekNextMonthPadding,
-// weekPrevMonthPadding,
-// onNextButtonClick,
-// onPrevButtonClick,
-// onDateClick,
-// onPrevMonthDateClick,
-// onNextMonthDateClick,
-{
-  // title: string;
-  // baseDate: Date;
-  // dayNames: string[];
-  // weekList: number[][];
-  // weekNextMonthPadding?: number[];
-  // weekPrevMonthPadding?: number[];
-  // onNextButtonClick: () => void;
-  // onPrevButtonClick: () => void;
-  // onDateClick?: (date: number) => void;
-  // onPrevMonthDateClick?: (date: number) => void;
-  // onNextMonthDateClick?: (date: number) => void;
+function Calendar({
+  title,
+  baseDate,
+  dayNames,
+  weekList,
+  weekNextMonthPadding,
+  weekPrevMonthPadding,
+  onNextButtonClick,
+  onPrevButtonClick,
+  onDateClick,
+  onPrevMonthDateClick,
+  onNextMonthDateClick,
+}: {
+  title: string;
+  baseDate: Date;
+  dayNames: string[];
+  weekList: number[][];
+  weekNextMonthPadding?: number[];
+  weekPrevMonthPadding?: number[];
+  onNextButtonClick: () => void;
+  onPrevButtonClick: () => void;
+  onDateClick?: (date: Date) => void;
+  onPrevMonthDateClick?: (date: Date) => void;
+  onNextMonthDateClick?: (date: Date) => void;
 }) {
-  const {
-    baseDate,
-    dayNames,
-    setBaseDate,
-    weekList,
-    weekNextMonthPadding,
-    weekPrevMonthPadding,
-  } = useWeekList();
+  // const {
+  //   baseDate,
+  //   dayNames,
+  //   setBaseDate,
+  //   weekList,
+  //   weekNextMonthPadding,
+  //   weekPrevMonthPadding,
+  // } = useWeekList();
 
   const baseYYYYMMDD = dayjs(baseDate).format('YYYYMMDD');
   const todayYYYYMMDD = dayjs().format('YYYYMMDD');
@@ -50,9 +51,10 @@ function Calendar({}: // title,
         <div
           className="round_box"
           onClick={() => {
-            setBaseDate(
-              dayjs(baseDate).subtract(1, 'month').startOf('month').toDate(),
-            );
+            onPrevButtonClick();
+            // setBaseDate(
+            //   dayjs(baseDate).subtract(1, 'month').startOf('month').toDate(),
+            // );
           }}
         >
           <LeftArrowIcon />
@@ -63,9 +65,10 @@ function Calendar({}: // title,
         <div
           className="round_box"
           onClick={() => {
-            setBaseDate(
-              dayjs(baseDate).add(1, 'month').startOf('month').toDate(),
-            );
+            onNextButtonClick();
+            // setBaseDate(
+            //   dayjs(baseDate).add(1, 'month').startOf('month').toDate(),
+            // );
           }}
         >
           <RightArrowIcon />
@@ -106,7 +109,8 @@ function Calendar({}: // title,
                     <DateBox
                       date={date.toDate()}
                       onClick={() => {
-                        setBaseDate(date.toDate());
+                        onPrevMonthDateClick(date.toDate());
+                        // setBaseDate(date.toDate());
                       }}
                       isClicked={
                         date.format(DATE_COMPARE_FORMAT) === baseYYYYMMDD
@@ -129,7 +133,8 @@ function Calendar({}: // title,
                   <DateBox
                     date={date.toDate()}
                     onClick={() => {
-                      setBaseDate(date.toDate());
+                      onDateClick(date.toDate());
+                      // setBaseDate(date.toDate());
                     }}
                     isClicked={
                       date.format(DATE_COMPARE_FORMAT) === baseYYYYMMDD
@@ -152,7 +157,8 @@ function Calendar({}: // title,
                     <DateBox
                       date={date.toDate()}
                       onClick={() => {
-                        setBaseDate(date.toDate());
+                        onNextMonthDateClick(date.toDate());
+                        // setBaseDate(date.toDate());
                       }}
                       isClicked={
                         date.format(DATE_COMPARE_FORMAT) === baseYYYYMMDD

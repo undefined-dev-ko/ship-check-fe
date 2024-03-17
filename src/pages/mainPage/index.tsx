@@ -6,14 +6,14 @@ import Calendar from '../../components/Calendar';
 import useCalendar from '../../hooks/useWeekList';
 
 function MainPage() {
-  // const {
-  //   baseDate,
-  //   dayNames,
-  //   setBaseDate,
-  //   weekList,
-  //   weekNextMonthPadding,
-  //   weekPrevMonthPadding,
-  // } = useCalendar();
+  const {
+    baseDate,
+    dayNames,
+    setBaseDate,
+    weekList,
+    weekNextMonthPadding,
+    weekPrevMonthPadding,
+  } = useCalendar();
 
   return (
     <>
@@ -22,25 +22,31 @@ function MainPage() {
           <Notice />
           <div>content</div>
           <Calendar
-          // title={dayjs(baseDate).format('YYYY년 MM월')}
-          // baseDate={baseDate}
-          // dayNames={dayNames}
-          // weekList={weekList}
-          // weekNextMonthPadding={weekNextMonthPadding}
-          // weekPrevMonthPadding={weekPrevMonthPadding}
-          // onPrevButtonClick={() => {
-          //   setBaseDate(
-          //     dayjs(baseDate).subtract(1, 'month').startOf('month').toDate(),
-          //   );
-          // }}
-          // onNextButtonClick={() => {
-          //   setBaseDate(
-          //     dayjs(baseDate).add(1, 'month').startOf('month').toDate(),
-          //   );
-          // }}
-          // onDateClick={undefined}
-          // onNextMonthDateClick={undefined}
-          // onPrevMonthDateClick={undefined}
+            title={dayjs(baseDate).format('YYYY년 MM월')}
+            baseDate={baseDate}
+            dayNames={dayNames}
+            weekList={weekList}
+            weekNextMonthPadding={weekNextMonthPadding}
+            weekPrevMonthPadding={weekPrevMonthPadding}
+            onPrevButtonClick={() => {
+              setBaseDate(
+                dayjs(baseDate).subtract(1, 'month').startOf('month').toDate(),
+              );
+            }}
+            onNextButtonClick={() => {
+              setBaseDate(
+                dayjs(baseDate).add(1, 'month').startOf('month').toDate(),
+              );
+            }}
+            onDateClick={(date: Date) => {
+              setBaseDate(date);
+            }}
+            onNextMonthDateClick={(date: Date) => {
+              setBaseDate(date);
+            }}
+            onPrevMonthDateClick={(date: Date) => {
+              setBaseDate(date);
+            }}
           />
         </Styled.MainPageContainer>
       </Layout>
