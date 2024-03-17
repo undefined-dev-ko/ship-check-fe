@@ -41,12 +41,6 @@ function MainPage() {
             onDateClick={(date: Date) => {
               setBaseDate(date);
             }}
-            onNextMonthDateClick={(date: Date) => {
-              setBaseDate(date);
-            }}
-            onPrevMonthDateClick={(date: Date) => {
-              setBaseDate(date);
-            }}
           />
         </Styled.MainPageContainer>
       </Layout>

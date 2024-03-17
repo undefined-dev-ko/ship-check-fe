@@ -16,8 +16,8 @@ function Calendar({
   onNextButtonClick,
   onPrevButtonClick,
   onDateClick,
-  onPrevMonthDateClick,
-  onNextMonthDateClick,
+  // onPrevMonthDateClick,
+  // onNextMonthDateClick,
   numberOfWeekToShow = 6,
 }: {
   title: string;
@@ -29,8 +29,8 @@ function Calendar({
   onNextButtonClick: () => void;
   onPrevButtonClick: () => void;
   onDateClick?: (date: Date) => void;
-  onPrevMonthDateClick?: (date: Date) => void;
-  onNextMonthDateClick?: (date: Date) => void;
+  // onPrevMonthDateClick?: (date: Date) => void;
+  // onNextMonthDateClick?: (date: Date) => void;
   numberOfWeekToShow?: number;
 }) {
   // const {
@@ -44,6 +44,45 @@ function Calendar({
 
   const baseYYYYMMDD = dayjs(baseDate).format('YYYYMMDD');
   const todayYYYYMMDD = dayjs().format('YYYYMMDD');
+
+  const weekListToShow: Array<Array<{ date: Date; value: number }>> =
+    weekList.map((week, i) => {
+      const result: Array<{ date: Date; value: number }> = [];
+      weekPrevMonthPadding &&
+        i === 0 &&
+        (() => {
+          result.push(
+            ...weekPrevMonthPadding.map((v) => ({
+              date: dayjs(baseDate)
+                .subtract(1, 'month')
+                .set('date', v)
+                .toDate(),
+              value: v,
+            })),
+          );
+        })();
+
+      result.push(
+        ...week.map((v) => ({
+          date: dayjs(baseDate).set('date', v).toDate(),
+          value: v,
+        })),
+      );
+
+      weekNextMonthPadding &&
+        i === weekList.length - 1 &&
+        (() => {
+          result.push(
+            ...weekNextMonthPadding.map((v) => ({
+              date: dayjs(baseDate).add(1, 'month').set('date', v).toDate(),
+              value: v,
+            })),
+          );
+        })();
+
+      return result;
+    });
+
   return (
     <Styled.Container>
       <Styled.Header>
@@ -84,7 +123,7 @@ function Calendar({
 
         <div>
           {/** 주 출력 */}
-          {weekList.map((week, i) => (
+          {weekListToShow.map((week, i) => (
             <div
               className="flex_horizontal"
               key={i}
@@ -97,82 +136,24 @@ function Calendar({
                     : 'center',
               }}
             >
-              {/** 일 출력(이전달) */}
-              {i === 0 &&
-                weekPrevMonthPadding &&
-                weekPrevMonthPadding.map((v) => {
-                  const date = dayjs(baseDate)
-                    .subtract(1, 'month')
-                    .set('date', v);
-                  return (
-                    <DateBox
-                      date={date.toDate()}
-                      onClick={() => {
-                        onPrevMonthDateClick(date.toDate());
-                        // setBaseDate(date.toDate());
-                      }}
-                      isClicked={
-                        date.format(DATE_COMPARE_FORMAT) === baseYYYYMMDD
-                      }
-                      isToday={
-                        date.format(DATE_COMPARE_FORMAT) === todayYYYYMMDD
-                      }
-                      isDisabled={
-                        date.format(DATE_COMPARE_FORMAT) < todayYYYYMMDD
-                      }
-                      isReserved={false}
-                      key={v}
-                    />
-                  );
-                })}
               {/** 일 출력 */}
               {week.map((v) => {
-                const date = dayjs(baseDate).set('date', v);
+                const date = v.date;
+                const dateYYYYMMDD = dayjs(v.date).format(DATE_COMPARE_FORMAT);
                 return (
                   <DateBox
-                    date={date.toDate()}
+                    date={date}
                     onClick={() => {
-                      onDateClick(date.toDate());
-                      // setBaseDate(date.toDate());
+                      onDateClick(date);
                     }}
-                    isClicked={
-                      date.format(DATE_COMPARE_FORMAT) === baseYYYYMMDD
-                    }
-                    isToday={date.format(DATE_COMPARE_FORMAT) === todayYYYYMMDD}
-                    isDisabled={
-                      date.format(DATE_COMPARE_FORMAT) < todayYYYYMMDD
-                    }
+                    isClicked={dateYYYYMMDD === baseYYYYMMDD}
+                    isToday={dateYYYYMMDD === todayYYYYMMDD}
+                    isDisabled={dateYYYYMMDD < todayYYYYMMDD}
                     isReserved={false}
-                    key={v}
+                    key={v.date.toString()}
                   />
                 );
               })}
-              {/** 일 출력(다음달) */}
-              {i === weekList.length - 1 &&
-                weekNextMonthPadding &&
-                weekNextMonthPadding.map((v) => {
-                  const date = dayjs(baseDate).add(1, 'month').set('date', v);
-                  return (
-                    <DateBox
-                      date={date.toDate()}
-                      onClick={() => {
-                        onNextMonthDateClick(date.toDate());
-                        // setBaseDate(date.toDate());
-                      }}
-                      isClicked={
-                        date.format(DATE_COMPARE_FORMAT) === baseYYYYMMDD
-                      }
-                      isToday={
-                        date.format(DATE_COMPARE_FORMAT) === todayYYYYMMDD
-                      }
-                      isDisabled={
-                        date.format(DATE_COMPARE_FORMAT) < todayYYYYMMDD
-                      }
-                      isReserved={false}
-                      key={v}
-                    />
-                  );
-                })}
             </div>
           ))}
         </div>
