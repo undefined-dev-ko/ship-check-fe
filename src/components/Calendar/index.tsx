@@ -1,12 +1,9 @@
-import { useState } from 'react';
+import dayjs from 'dayjs';
 import LeftArrowIcon from '../SvgIcons/LeftArrowIcon';
 import RightArrowIcon from '../SvgIcons/RightArrowIcon';
-import Styled from './index.styles';
-import dayjs from 'dayjs';
 import DateBox from './DateBox';
-import { toYYYYMMDD } from './util';
 import DayBox from './DayBox';
-import useWeekList from '../../hooks/useWeekList';
+import Styled from './index.styles';
 
 const DATE_COMPARE_FORMAT = 'YYYYMMDD';
 function Calendar({
@@ -21,6 +18,7 @@ function Calendar({
   onDateClick,
   onPrevMonthDateClick,
   onNextMonthDateClick,
+  numberOfWeekToShow = 6,
 }: {
   title: string;
   baseDate: Date;
@@ -33,6 +31,7 @@ function Calendar({
   onDateClick?: (date: Date) => void;
   onPrevMonthDateClick?: (date: Date) => void;
   onNextMonthDateClick?: (date: Date) => void;
+  numberOfWeekToShow?: number;
 }) {
   // const {
   //   baseDate,
