@@ -19,29 +19,38 @@ function MainPage() {
     <>
       <Layout>
         <Styled.MainPageContainer>
-          <Notice />
-          <div>content</div>
-          <Calendar
-            title={dayjs(baseDate).format('YYYY년 MM월')}
-            baseDate={baseDate}
-            dayNames={dayNames}
-            weekList={weekList}
-            weekNextMonthPadding={weekNextMonthPadding}
-            weekPrevMonthPadding={weekPrevMonthPadding}
-            onPrevButtonClick={() => {
-              setBaseDate(
-                dayjs(baseDate).subtract(1, 'month').startOf('month').toDate(),
-              );
-            }}
-            onNextButtonClick={() => {
-              setBaseDate(
-                dayjs(baseDate).add(1, 'month').startOf('month').toDate(),
-              );
-            }}
-            onDateClick={(date: Date) => {
-              setBaseDate(date);
-            }}
-          />
+          <Styled.ContentHeader>
+            <div>
+              <Notice />
+            </div>
+            <div>
+              <Calendar
+                title={dayjs(baseDate).format('YYYY년 MM월')}
+                baseDate={baseDate}
+                dayNames={dayNames}
+                weekList={weekList}
+                weekNextMonthPadding={weekNextMonthPadding}
+                weekPrevMonthPadding={weekPrevMonthPadding}
+                onPrevButtonClick={() => {
+                  setBaseDate(
+                    dayjs(baseDate)
+                      .subtract(1, 'month')
+                      .startOf('month')
+                      .toDate(),
+                  );
+                }}
+                onNextButtonClick={() => {
+                  setBaseDate(
+                    dayjs(baseDate).add(1, 'month').startOf('month').toDate(),
+                  );
+                }}
+                onDateClick={(date: Date) => {
+                  setBaseDate(date);
+                }}
+                miniCalendar={true}
+              />
+            </div>
+          </Styled.ContentHeader>
         </Styled.MainPageContainer>
       </Layout>
     </>

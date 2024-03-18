@@ -16,36 +16,30 @@ function Calendar({
   onNextButtonClick,
   onPrevButtonClick,
   onDateClick,
-  // onPrevMonthDateClick,
-  // onNextMonthDateClick,
-  numberOfWeekToShow = 6,
+  miniCalendar = false,
 }: {
   title: string;
   baseDate: Date;
   dayNames: string[];
   weekList: number[][];
-  weekNextMonthPadding?: number[];
-  weekPrevMonthPadding?: number[];
+  weekNextMonthPadding: number[];
+  weekPrevMonthPadding: number[];
   onNextButtonClick: () => void;
   onPrevButtonClick: () => void;
   onDateClick?: (date: Date) => void;
-  // onPrevMonthDateClick?: (date: Date) => void;
-  // onNextMonthDateClick?: (date: Date) => void;
-  numberOfWeekToShow?: number;
+  miniCalendar?: boolean;
 }) {
-  // const {
-  //   baseDate,
-  //   dayNames,
-  //   setBaseDate,
-  //   weekList,
-  //   weekNextMonthPadding,
-  //   weekPrevMonthPadding,
-  // } = useWeekList();
-
   const baseYYYYMMDD = dayjs(baseDate).format('YYYYMMDD');
   const todayYYYYMMDD = dayjs().format('YYYYMMDD');
 
-  const weekListToShow: Array<Array<{ date: Date; value: number }>> =
+  const baseDateWeek = weekList.reduce((prev, curr, i) => {
+    if (curr.find((v) => v === baseDate.getDate())) {
+      return i + 1;
+    }
+    return prev;
+  }, 1);
+
+  const composedWeekList: Array<Array<{ date: Date; value: number }>> =
     weekList.map((week, i) => {
       const result: Array<{ date: Date; value: number }> = [];
       weekPrevMonthPadding &&
@@ -83,6 +77,17 @@ function Calendar({
       return result;
     });
 
+  const weekListToShow: Array<Array<{ date: Date; value: number }>> =
+    miniCalendar
+      ? (composedWeekList.length === baseDateWeek
+          ? [
+              composedWeekList[baseDateWeek - 2],
+              composedWeekList[baseDateWeek - 1],
+            ]
+          : [composedWeekList[baseDateWeek - 1], composedWeekList[baseDateWeek]]
+        ).filter((v) => !!v)
+      : composedWeekList;
+
   return (
     <Styled.Container>
       <Styled.Header>
@@ -90,9 +95,6 @@ function Calendar({
           className="round_box"
           onClick={() => {
             onPrevButtonClick();
-            // setBaseDate(
-            //   dayjs(baseDate).subtract(1, 'month').startOf('month').toDate(),
-            // );
           }}
         >
           <LeftArrowIcon />
@@ -104,9 +106,6 @@ function Calendar({
           className="round_box"
           onClick={() => {
             onNextButtonClick();
-            // setBaseDate(
-            //   dayjs(baseDate).add(1, 'month').startOf('month').toDate(),
-            // );
           }}
         >
           <RightArrowIcon />
