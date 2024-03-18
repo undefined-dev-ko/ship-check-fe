@@ -33,4 +33,41 @@ const HoverContainer = styled(Container)`
   cursor: pointer;
 `;
 
-export default { Container, HoverContainer };
+const ToolTip = styled.div`
+  position: relative;
+
+  .tooltiptext {
+    position: absolute;
+    z-index: 1;
+    left: 50%;
+    transform: translate(-50%, 10%);
+
+    white-space: nowrap;
+    background-color: #212121;
+    box-shadow: 0px 2px 6px 2px #00000026;
+    border-radius: 3px;
+    padding: 12px;
+    font-weight: 400;
+    line-height: 20px;
+
+    visibility: hidden;
+  }
+
+  .tooltiptext::after {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    transform: translate(-50%, 10%);
+
+    border: 5px solid transparent;
+    border-bottom-color: #212121;
+    border-top: 0;
+  }
+
+  &:hover .tooltiptext {
+    visibility: visible;
+  }
+`;
+
+export default { Container, HoverContainer, ToolTip };

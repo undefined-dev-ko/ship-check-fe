@@ -18,12 +18,18 @@ interface Reservation {
   seatId?: number;
   createdAt?: Date;
 }
+export interface Item {
+  id: number;
+  category: 'monitor' | 'arm' | 'charger';
+  memo?: string;
+}
 
 export interface Seat {
   id: number;
   deskNo: number;
   fixedUser?: User;
   reservation?: Reservation;
+  items: Item[];
 }
 
 function Reservation(props: { currentDate: Date }) {
