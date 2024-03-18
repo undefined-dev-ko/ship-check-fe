@@ -1,11 +1,11 @@
 import Styled from './index.styles';
-import { Seat } from '..';
+import { Item, Seat } from '..';
 import { COLOR } from '../../../styles/constants';
 import { useRef } from 'react';
 import useHover from '../../../hooks/useHover';
 
 function Desk(props: Seat) {
-  const { fixedUser, reservation } = props;
+  const { fixedUser, reservation, items } = props;
   const ref = useRef<HTMLLIElement>(null);
   const isHovering = useHover<HTMLLIElement>(ref);
 
@@ -30,7 +30,7 @@ function Desk(props: Seat) {
   else {
     return (
       <li ref={ref}>
-        <Default isHovering={isHovering} />
+        <Default isHovering={isHovering} items={items} />
       </li>
     );
   }
@@ -51,12 +51,29 @@ function Fixed({
   );
 }
 
-function Default({ isHovering }: { isHovering: boolean }) {
+function Default({
+  isHovering,
+  items = [],
+}: {
+  isHovering: boolean;
+  items: Item[];
+}) {
   return (
     <>
       {isHovering ? (
         <Styled.HoverContainer color={COLOR.primaryGreen}>
           <p className="text">자리 예약하기</p>
+
+          <Styled.ToolTip>
+            <img src="/info_icon.svg" alt="info" />
+
+            <div className="tooltiptext">
+              {items.length &&
+                items.map((item, index) => (
+                  <p key={index}>- {convertItems(item)}</p>
+                ))}
+            </div>
+          </Styled.ToolTip>
         </Styled.HoverContainer>
       ) : (
         <Styled.Container />
@@ -100,6 +117,17 @@ const convertTeam = (team: 'backend' | 'frontend' | 'design' | 'etc') => {
       return '디자인팀';
     case 'etc':
       return '기획팀';
+  }
+};
+
+const convertItems = (item: Item): string => {
+  switch (item.category) {
+    case 'monitor':
+      return '모니터';
+    case 'arm':
+      return '모니터 암';
+    case 'charger':
+      return 'PD 충전기';
   }
 };
 

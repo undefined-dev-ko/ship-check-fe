@@ -7,7 +7,8 @@
         "id": 241,
         "name": "성인식",
         "team": "etc"
-      }
+      },
+      "items": []
     },
     {
       "id": 2,
@@ -16,7 +17,8 @@
         "id": 2431,
         "name": "이준후",
         "team": "etc"
-      }
+      },
+      "items": []
     },
     {
       "id": 3,
@@ -25,7 +27,8 @@
         "id": 2431,
         "name": "김아랑",
         "team": "etc"
-      }
+      },
+      "items": []
     },
     {
       "id": 4,
@@ -34,7 +37,26 @@
         "id": 2431,
         "name": "한유민",
         "team": "etc"
-      }
+      },
+      "items": []
+    },
+    {
+      "id": 21,
+      "deskNo": 5,
+      "items": [
+        {
+          "id": 1,
+          "category": "monitor"
+        },
+        {
+          "id": 2,
+          "category": "arm"
+        },
+        {
+          "id": 3,
+          "category": "charger"
+        }
+      ]
     },
     {
       "id": 5,
@@ -46,7 +68,42 @@
           "name": "박상유",
           "team": "design"
         }
-      }
+      },
+      "items": [
+        {
+          "id": 1,
+          "category": "monitor"
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "deskNo": 7,
+      "items": [
+        {
+          "id": 1,
+          "category": "monitor"
+        },
+        {
+          "id": 3,
+          "category": "charger"
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "deskNo": 8,
+      "fixedUser": {
+        "id": 2431,
+        "name": "김종하",
+        "team": "backend"
+      },
+      "items": [
+        {
+          "id": 1,
+          "category": "monitor"
+        }
+      ]
     },
     {
       "id": 6,
@@ -58,20 +115,13 @@
           "name": "송승은",
           "team": "frontend"
         }
-      }
-    },
-
-    {
-      "id": 8,
-      "deskNo": 11,
-      "reservation": {
-        "id": 10229,
-        "user": {
-          "id": 32,
-          "name": "양찬규",
-          "team": "backend"
+      },
+      "items": [
+        {
+          "id": 1,
+          "category": "monitor"
         }
-      }
+      ]
     },
     {
       "id": 10,
@@ -83,16 +133,41 @@
           "name": "장이주",
           "team": "backend"
         }
-      }
+      },
+      "items": [
+        {
+          "id": 1,
+          "category": "monitor"
+        }
+      ]
     },
     {
-      "id": 12,
-      "deskNo": 8,
-      "fixedUser": {
-        "id": 2431,
-        "name": "김종하",
-        "team": "backend"
-      }
+      "id": 8,
+      "deskNo": 11,
+      "reservation": {
+        "id": 10229,
+        "user": {
+          "id": 32,
+          "name": "양찬규",
+          "team": "backend"
+        }
+      },
+      "items": [
+        {
+          "id": 1,
+          "category": "monitor"
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "deskNo": 12,
+      "items": [
+        {
+          "id": 1,
+          "category": "monitor"
+        }
+      ]
     },
     {
       "id": 13,
@@ -104,7 +179,13 @@
           "name": "최용석",
           "team": "backend"
         }
-      }
+      },
+      "items": [
+        {
+          "id": 1,
+          "category": "monitor"
+        }
+      ]
     },
     {
       "id": 13,
@@ -116,7 +197,27 @@
           "name": "양자경",
           "team": "backend"
         }
-      }
+      },
+      "items": [
+        {
+          "id": 1,
+          "category": "monitor"
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "deskNo": 15,
+      "items": [
+        {
+          "id": 1,
+          "category": "monitor"
+        },
+        {
+          "id": 2,
+          "category": "arm"
+        }
+      ]
     }
   ]
 }
