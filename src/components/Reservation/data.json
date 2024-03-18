@@ -1,0 +1,122 @@
+{
+  "reservation": [
+    {
+      "id": 1,
+      "deskNo": 1,
+      "fixedUser": {
+        "id": 241,
+        "name": "성인식",
+        "team": "etc"
+      }
+    },
+    {
+      "id": 2,
+      "deskNo": 2,
+      "fixedUser": {
+        "id": 2431,
+        "name": "이준후",
+        "team": "etc"
+      }
+    },
+    {
+      "id": 3,
+      "deskNo": 3,
+      "fixedUser": {
+        "id": 2431,
+        "name": "김아랑",
+        "team": "etc"
+      }
+    },
+    {
+      "id": 4,
+      "deskNo": 4,
+      "fixedUser": {
+        "id": 2431,
+        "name": "한유민",
+        "team": "etc"
+      }
+    },
+    {
+      "id": 5,
+      "deskNo": 6,
+      "reservation": {
+        "id": 1039,
+        "user": {
+          "id": 3,
+          "name": "박상유",
+          "team": "design"
+        }
+      }
+    },
+    {
+      "id": 6,
+      "deskNo": 9,
+      "reservation": {
+        "id": 1029,
+        "user": {
+          "id": 3,
+          "name": "송승은",
+          "team": "frontend"
+        }
+      }
+    },
+
+    {
+      "id": 8,
+      "deskNo": 11,
+      "reservation": {
+        "id": 10229,
+        "user": {
+          "id": 32,
+          "name": "양찬규",
+          "team": "backend"
+        }
+      }
+    },
+    {
+      "id": 10,
+      "deskNo": 10,
+      "reservation": {
+        "id": 10129,
+        "user": {
+          "id": 31,
+          "name": "장이주",
+          "team": "backend"
+        }
+      }
+    },
+    {
+      "id": 12,
+      "deskNo": 8,
+      "fixedUser": {
+        "id": 2431,
+        "name": "김종하",
+        "team": "backend"
+      }
+    },
+    {
+      "id": 13,
+      "deskNo": 13,
+      "reservation": {
+        "id": 10219,
+        "user": {
+          "id": 93,
+          "name": "최용석",
+          "team": "backend"
+        }
+      }
+    },
+    {
+      "id": 13,
+      "deskNo": 14,
+      "reservation": {
+        "id": 10219,
+        "user": {
+          "id": 93,
+          "name": "양자경",
+          "team": "backend"
+        }
+      }
+    }
+  ]
+}
