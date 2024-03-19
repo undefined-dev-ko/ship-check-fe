@@ -127,6 +127,7 @@ function Calendar({
               className="flex_horizontal"
               key={i}
               style={{
+                // 이거 가독성 클래스 로 빼자 스타일드 컴포넌트로 프롭스로 넘기자조건같은거
                 justifyContent:
                   i === 0
                     ? 'right'

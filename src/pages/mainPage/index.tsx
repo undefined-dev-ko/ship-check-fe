@@ -3,7 +3,7 @@ import Layout from '../../containers/Layout';
 import Styled from './index.styles';
 import dayjs from 'dayjs';
 import Calendar from '../../components/Calendar';
-import useCalendar from '../../hooks/useWeekList';
+import useWeekList from '../../hooks/useWeekList';
 
 function MainPage() {
   const {
@@ -11,9 +11,9 @@ function MainPage() {
     dayNames,
     setBaseDate,
     weekList,
-    weekNextMonthPadding,
-    weekPrevMonthPadding,
-  } = useCalendar();
+    weekNextMonthPadding: nextMonthDateList, // 이거 수정
+    weekPrevMonthPadding: prevMonthDateList, // 이거 수정
+  } = useWeekList();
 
   return (
     <>
@@ -29,8 +29,8 @@ function MainPage() {
                 baseDate={baseDate}
                 dayNames={dayNames}
                 weekList={weekList}
-                weekNextMonthPadding={weekNextMonthPadding}
-                weekPrevMonthPadding={weekPrevMonthPadding}
+                weekNextMonthPadding={nextMonthDateList}
+                weekPrevMonthPadding={prevMonthDateList}
                 onPrevButtonClick={() => {
                   setBaseDate(
                     dayjs(baseDate)
@@ -47,7 +47,7 @@ function MainPage() {
                 onDateClick={(date: Date) => {
                   setBaseDate(date);
                 }}
-                miniCalendar={true}
+                miniCalendar={false}
               />
             </div>
           </Styled.ContentHeader>
