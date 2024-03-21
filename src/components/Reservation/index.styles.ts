@@ -23,6 +23,7 @@ const SeatList = styled.div`
   align-items: center;
   gap: 12px;
   width: 1160px;
+  height: 564px;
 
   ul {
     display: flex;

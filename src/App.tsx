@@ -20,7 +20,6 @@ const GlobalStyle = createGlobalStyle`
   font-size: 20px;
   font-weight: 500;
 
-  -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   }
 

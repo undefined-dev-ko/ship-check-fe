@@ -111,7 +111,7 @@
       "reservation": {
         "id": 1029,
         "user": {
-          "id": 3,
+          "id": 30,
           "name": "송승은",
           "team": "frontend"
         }
@@ -219,5 +219,11 @@
         }
       ]
     }
-  ]
+  ],
+  "user": {
+    "id": 3,
+    "name": "장이주",
+    "team": "backend",
+    "photo": "/logo.png"
+  }
 }

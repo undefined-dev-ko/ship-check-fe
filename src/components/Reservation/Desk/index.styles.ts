@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { COLOR } from '../../../styles/constants';
 
-const Container = styled.div<{ color?: string; isMine?: boolean }>`
+const Container = styled.li<{ isHovering?: boolean; isMine?: boolean }>`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -10,7 +10,6 @@ const Container = styled.div<{ color?: string; isMine?: boolean }>`
   height: 120px;
   border-radius: 16px;
   color: ${COLOR.white};
-  background-color: ${(props) => props.color ?? '#eee'};
   box-shadow: ${(props) =>
     props.isMine ? `0 0 0 8px ${COLOR.primaryGreen} inset` : ''};
 
@@ -27,10 +26,23 @@ const Container = styled.div<{ color?: string; isMine?: boolean }>`
     font-weight: 500;
     line-height: 30px;
   }
-`;
 
-const HoverContainer = styled(Container)`
-  cursor: pointer;
+  &.fixed {
+    background-color: ${COLOR.primaryGray};
+  }
+  &.reserved {
+    background-color: ${(props) =>
+      props.isHovering && props.isMine
+        ? COLOR.primaryRed
+        : COLOR.primaryPurple};
+  }
+  &.default {
+    background-color: ${(props) =>
+      props.isHovering ? COLOR.primaryGreen : '#eee'};
+    cursor: pointer;
+  }
+
+  cursor: ${(props) => (props.isMine ? 'pointer' : 'default')};
 `;
 
 const ToolTip = styled.div`
@@ -70,4 +82,4 @@ const ToolTip = styled.div`
   }
 `;
 
-export default { Container, HoverContainer, ToolTip };
+export default { Container, ToolTip };

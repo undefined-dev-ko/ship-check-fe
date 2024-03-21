@@ -1,11 +1,11 @@
 import Notice from '../../components/Notice';
 import Layout from '../../containers/Layout';
 import Reservation from '../../components/Reservation';
-
 import Styled from './index.styles';
 import Calendar from '../../components/Calendar';
 import useWeekList from '../../hooks/useWeekList';
 import { useState } from 'react';
+import { UserProvider } from '../../context/userContext';
 
 function MainPage() {
   const { baseDate, dayNames, setBaseDate, weekList } = useWeekList();
@@ -13,7 +13,7 @@ function MainPage() {
   const todayDate = new Date();
 
   return (
-    <>
+    <UserProvider>
       <Layout>
         <Styled.Container>
           <Styled.MainPageContainer>
@@ -45,7 +45,7 @@ function MainPage() {
           </Styled.MainPageContainer>
         </Styled.Container>
       </Layout>
-    </>
+    </UserProvider>
   );
 }
 

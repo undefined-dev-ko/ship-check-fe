@@ -1,36 +1,9 @@
 import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import Styled from './index.styles';
-import axios from 'axios';
 import Desk from './Desk';
-
-interface User {
-  id: number;
-  email?: string;
-  name: string;
-  photo?: string;
-  team: 'backend' | 'frontend' | 'design' | 'etc';
-}
-
-interface Reservation {
-  id: number;
-  user: User;
-  seatId?: number;
-  createdAt?: Date;
-}
-export interface Item {
-  id: number;
-  category: 'monitor' | 'arm' | 'charger';
-  memo?: string;
-}
-
-export interface Seat {
-  id: number;
-  deskNo: number;
-  fixedUser?: User;
-  reservation?: Reservation;
-  items: Item[];
-}
+import { Seat } from '../../types';
+import client from '../../api/client';
 
 function Reservation(props: { currentDate: Date }) {
   const { currentDate } = props;
@@ -42,7 +15,7 @@ function Reservation(props: { currentDate: Date }) {
       setLoading(true);
 
       try {
-        const response = await axios.get<Seat[]>(
+        const response = await client.get<Seat[]>(
           'http://localhost:3001/reservation',
         );
         setSeatList(response.data);
@@ -55,7 +28,11 @@ function Reservation(props: { currentDate: Date }) {
   }, []);
 
   if (!seatList || loading) {
-    return <div>로딩중...</div>;
+    return (
+      <Styled.Container>
+        <Styled.SeatList>...로딩중...</Styled.SeatList>
+      </Styled.Container>
+    );
   }
 
   return (
@@ -87,6 +64,14 @@ function Reservation(props: { currentDate: Date }) {
           <Desk {...seatList.find((e) => e.deskNo === 13)} />
           <Desk {...seatList.find((e) => e.deskNo === 14)} />
           <Desk {...seatList.find((e) => e.deskNo === 15)} />
+        </ul>
+
+        <ul className="fourth">
+          <Desk {...seatList.find((e) => e.deskNo === 16)} />
+          <Desk {...seatList.find((e) => e.deskNo === 17)} />
+          <Desk {...seatList.find((e) => e.deskNo === 18)} />
+          <Desk {...seatList.find((e) => e.deskNo === 19)} />
+          <Desk {...seatList.find((e) => e.deskNo === 20)} />
         </ul>
       </Styled.SeatList>
     </Styled.Container>

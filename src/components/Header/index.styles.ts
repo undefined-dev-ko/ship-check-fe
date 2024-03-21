@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { COLOR } from '../../styles/constants';
+import { User } from '../../types';
 
 const Container = styled.div`
   width: 100%;
@@ -41,11 +42,13 @@ const Logo = styled.div`
   }
 `;
 
-const ProfileImage = styled.div`
+const ProfileImage = styled.div<{ user?: User }>`
   width: 60px;
   height: 60px;
   background-color: #fff;
   border-radius: 100%;
+  background-image: url(${({ user }) => user.photo});
+  background-size: cover;
 `;
 
 export default { Container, Header, Logo, ProfileImage };
