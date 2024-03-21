@@ -1,37 +1,40 @@
+import { useState } from 'react';
 import Styled from './index.styles';
 import { Item, Seat } from '..';
-import { COLOR } from '../../../styles/constants';
-import { useRef } from 'react';
-import useHover from '../../../hooks/useHover';
 
 function Desk(props: Seat) {
   const { fixedUser, reservation, items } = props;
-  const ref = useRef<HTMLLIElement>(null);
-  const isHovering = useHover<HTMLLIElement>(ref);
+  const [isHovering, setIsHovering] = useState(false);
+
+  const handleMouseOver = () => setIsHovering(true);
+  const handleMouseOut = () => setIsHovering(false);
 
   // 고정석
   if (fixedUser) {
-    return (
-      <li>
-        <Fixed name={fixedUser.name} team={fixedUser.team} />
-      </li>
-    );
+    return <Fixed name={fixedUser.name} team={fixedUser.team} />;
   }
   // 예약 O
   else if (reservation) {
     const { user } = reservation;
     return (
-      <li ref={ref}>
-        <Reserved isHovering={isHovering} name={user.name} team={user.team} />
-      </li>
+      <Reserved
+        isHovering={isHovering}
+        handleMouseOver={handleMouseOver}
+        handleMouseOut={handleMouseOut}
+        name={user.name}
+        team={user.team}
+      />
     );
   }
   // 예약 X
   else {
     return (
-      <li ref={ref}>
-        <Default isHovering={isHovering} items={items} />
-      </li>
+      <Default
+        isHovering={isHovering}
+        handleMouseOver={handleMouseOver}
+        handleMouseOut={handleMouseOut}
+        items={items}
+      />
     );
   }
 }
@@ -44,7 +47,7 @@ function Fixed({
   team: 'backend' | 'frontend' | 'design' | 'etc';
 }) {
   return (
-    <Styled.Container color={COLOR.primaryBlue}>
+    <Styled.Container className="fixed">
       <p className="name">{name}</p>
       <p className="team">{name === '김종하' ? 'CTO' : convertTeam(team)}</p>
     </Styled.Container>
@@ -53,15 +56,24 @@ function Fixed({
 
 function Default({
   isHovering,
+  handleMouseOver,
+  handleMouseOut,
   items = [],
 }: {
   isHovering: boolean;
+  handleMouseOver: () => void;
+  handleMouseOut: () => void;
   items: Item[];
 }) {
   return (
-    <>
-      {isHovering ? (
-        <Styled.HoverContainer color={COLOR.primaryGreen}>
+    <Styled.Container
+      className="default"
+      isHovering={isHovering}
+      onMouseOver={handleMouseOver}
+      onMouseOut={handleMouseOut}
+    >
+      {isHovering && (
+        <>
           <p className="text">자리 예약하기</p>
 
           <Styled.ToolTip>
@@ -74,36 +86,41 @@ function Default({
                 ))}
             </div>
           </Styled.ToolTip>
-        </Styled.HoverContainer>
-      ) : (
-        <Styled.Container />
+        </>
       )}
-    </>
+    </Styled.Container>
   );
 }
 
 function Reserved({
   isHovering,
+  handleMouseOver,
+  handleMouseOut,
   name,
   team,
 }: {
   isHovering: boolean;
+  handleMouseOver: () => void;
+  handleMouseOut: () => void;
   name: string;
   team: 'backend' | 'frontend' | 'design' | 'etc';
 }) {
   return (
-    <>
+    <Styled.Container
+      className="reserved"
+      isHovering={isHovering}
+      onMouseOver={handleMouseOver}
+      onMouseOut={handleMouseOut}
+    >
       {isHovering ? (
-        <Styled.HoverContainer color={COLOR.primaryRed}>
-          <p className="text">예약 취소하기</p>
-        </Styled.HoverContainer>
+        <p className="text">예약 취소하기</p>
       ) : (
-        <Styled.Container color={COLOR.primaryPurple}>
+        <>
           <p className="name">{name}</p>
           <p className="team">{convertTeam(team)}</p>
-        </Styled.Container>
+        </>
       )}
-    </>
+    </Styled.Container>
   );
 }
 

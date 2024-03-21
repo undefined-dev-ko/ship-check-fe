@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { COLOR } from '../../../styles/constants';
 
-const Container = styled.div<{ color?: string; isMine?: boolean }>`
+const Container = styled.li<{ isHovering?: boolean; isMine?: boolean }>`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -10,7 +10,6 @@ const Container = styled.div<{ color?: string; isMine?: boolean }>`
   height: 120px;
   border-radius: 16px;
   color: ${COLOR.white};
-  background-color: ${(props) => props.color ?? '#eee'};
   box-shadow: ${(props) =>
     props.isMine ? `0 0 0 8px ${COLOR.primaryGreen} inset` : ''};
 
@@ -26,6 +25,18 @@ const Container = styled.div<{ color?: string; isMine?: boolean }>`
   .team {
     font-weight: 500;
     line-height: 30px;
+  }
+
+  &.fixed {
+    background-color: ${COLOR.primaryBlue};
+  }
+  &.reserved {
+    background-color: ${(props) =>
+      props.isHovering ? COLOR.primaryRed : COLOR.primaryPurple};
+  }
+  &.default {
+    background-color: ${(props) =>
+      props.isHovering ? COLOR.primaryGreen : '#eee'};
   }
 `;
 
