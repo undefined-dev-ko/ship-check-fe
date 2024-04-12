@@ -37,10 +37,6 @@ function Reservation(props: { currentDate: Date }) {
 
   return (
     <Styled.Container>
-      <Styled.TitleDate>
-        {dayjs(currentDate).format('YYYY년 MM월 DD일')}
-      </Styled.TitleDate>
-
       <Styled.SeatList>
         <ul className="first">
           <Desk {...seatList.find((e) => e.deskNo === 1)} />

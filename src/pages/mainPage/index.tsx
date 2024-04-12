@@ -26,12 +26,10 @@ function MainPage() {
                 todayDate={todayDate}
                 clickedDate={clickedDate}
                 baseDate={baseDate}
-                reservedDateList={
-                  [
-                    // new Date(),
-                    // new Date('2024-04-12T05:00:00.000+09:00'),
-                  ]
-                }
+                reservedDateList={[
+                  new Date(),
+                  new Date('2024-04-12T05:00:00.000+09:00'),
+                ]}
                 setBaseDate={setBaseDate}
                 dayNames={dayNames}
                 weekList={weekList}

@@ -1,6 +1,6 @@
 import MenuItem from './MenuItem';
 import Styled from './index.styles';
-import useTokenAuth, { tokenPairInStorage } from '../../hooks/useTokenAuth';
+import useTokenAuth from '../../hooks/useTokenAuth';
 import { useGoogleAuth } from '../../hooks/useGoogleAuth';
 import { useUser } from '../../hooks/useUser';
 import { useEffect } from 'react';
@@ -20,9 +20,8 @@ function Header() {
     actions.storeUser(null);
   };
 
-  const token = tokenPairInStorage;
   useEffect(() => {
-    if (token) {
+    if (isLoggedIn) {
       const fetchUser = async () => {
         try {
           const response = await client.get<User>('http://localhost:3001/user');
@@ -33,7 +32,7 @@ function Header() {
       };
       fetchUser();
     }
-  }, [token]);
+  }, [isLoggedIn]);
 
   return (
     <Styled.Container>
