@@ -1,54 +1,53 @@
 import { useState } from 'react';
-import { Item, Reservation, Seat, User } from '../../../types';
+import { Item, Reservation, Seat } from '../../../types';
 import Styled from './index.styles';
+import { useUser } from '../../../hooks/useUser';
 
 function Desk({
   seat,
   reservation,
-  myself,
   createReservation,
   cancelReservation,
 }: {
   seat: Seat | undefined;
   reservation: Reservation | undefined;
-  myself: User;
   createReservation: (seatId: number) => void;
   cancelReservation: (seatId: number) => void;
 }) {
+  const { user } = useUser();
   const [isHovering, setIsHovering] = useState(false);
   const handleMouseOver = () => setIsHovering(true);
   const handleMouseOut = () => setIsHovering(false);
 
   if (!seat) {
     return (
-      <Reserved
+      <Default
         isHovering={false}
-        isMine={false}
         handleMouseOver={() => {}}
         handleMouseOut={() => {}}
-        name={'Seat없음'}
-        team={'Seat없음'}
-        onClickCancelButton={() => {}}
+        onReserveButtonClick={() => {}}
       />
     );
   }
-  const { fixedUser, items } = seat;
 
   // 고정석
+  const { fixedUser, items } = seat;
   if (fixedUser) {
-    return <Fixed name={fixedUser.name} team={fixedUser.team?.name || ''} />;
+    const { name, team } = fixedUser;
+    return <Fixed name={name} team={team ? team.name : '소속팀 없음'} />;
   }
   // 예약 O
   else if (reservation) {
-    const isMine = myself ? myself.id === reservation.user.id : false;
+    const { name, team } = reservation.user;
+    const isMine = user ? user.id === reservation.user.id : false;
     return (
       <Reserved
-        isHovering={isHovering}
+        isHovering={user ? isHovering : false}
         isMine={isMine}
         handleMouseOver={handleMouseOver}
         handleMouseOut={handleMouseOut}
-        name={reservation.user.name}
-        team={reservation.user.team?.name || ''}
+        name={name}
+        team={team ? team.name : '소속팀 없음'}
         onClickCancelButton={() => {
           isMine && cancelReservation(seat.id);
         }}
@@ -59,7 +58,7 @@ function Desk({
   else {
     return (
       <Default
-        isHovering={isHovering}
+        isHovering={user ? isHovering : false}
         handleMouseOver={handleMouseOver}
         handleMouseOut={handleMouseOut}
         items={items}
@@ -96,8 +95,8 @@ function Default({
   isHovering: boolean;
   handleMouseOver: () => void;
   handleMouseOut: () => void;
-  items: Item[];
   onReserveButtonClick: () => void;
+  items?: Item[];
 }) {
   return (
     <Styled.Container
@@ -105,21 +104,21 @@ function Default({
       isHovering={isHovering}
       onMouseOver={handleMouseOver}
       onMouseOut={handleMouseOut}
+      onClick={onReserveButtonClick}
     >
       {isHovering && (
         <>
-          <p className="text" onClick={onReserveButtonClick}>
-            자리 예약하기
-          </p>
+          <p className="text">자리 예약하기</p>
 
           <Styled.ToolTip>
             <img src="/info_icon.svg" alt="info" />
 
             <div className="tooltiptext">
-              {items.length &&
-                items.map((item, index) => (
-                  <p key={index}>- {convertItems(item)}</p>
-                ))}
+              {items.length
+                ? items.map((item, index) => (
+                    <p key={index}>- {convertItems(item)}</p>
+                  ))
+                : '없음'}
             </div>
           </Styled.ToolTip>
         </>
@@ -152,11 +151,10 @@ function Reserved({
       isMine={isMine}
       onMouseOver={handleMouseOver}
       onMouseOut={handleMouseOut}
+      onClick={onClickCancelButton}
     >
       {isMine && isHovering ? (
-        <p className="text" onClick={onClickCancelButton}>
-          예약 취소하기
-        </p>
+        <p className="text">예약 취소하기</p>
       ) : (
         <>
           <p className="name">{name}</p>

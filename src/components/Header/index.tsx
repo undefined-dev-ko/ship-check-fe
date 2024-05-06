@@ -1,21 +1,28 @@
+import { useEffect } from 'react';
 import MenuItem from './MenuItem';
 import Styled from './index.styles';
 import { useTokenAuth } from '../../hooks/useTokenAuth';
 import { useGoogleAuth } from '../../hooks/useGoogleAuth';
+import { useUser } from '../../hooks/useUser';
 
 function Header() {
-  const { isLoggedIn, clearToken, user } = useTokenAuth();
+  const { user, actions } = useUser();
+  const { isLoggedIn, clearToken, user: extractedUser } = useTokenAuth();
   const { oauthSignIn: googleOauthSignin } = useGoogleAuth();
-  // const { user, actions } = useUser();
 
   const handleLoginClick = () => {
     googleOauthSignin();
   };
   const handleLogoutClick = () => {
     clearToken();
+    actions.storeUser(null);
   };
 
-  console.log(user);
+  useEffect(() => {
+    if (isLoggedIn) {
+      actions.storeUser(extractedUser);
+    }
+  }, [isLoggedIn]);
 
   return (
     <Styled.Container>
