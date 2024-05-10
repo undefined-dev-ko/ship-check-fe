@@ -31,6 +31,8 @@ export const useTokenAuth = () => {
     setIsLoggedIn(false);
   };
 
+  console.log(isLoggedIn);
+
   // 브라우저 refresh 하는 경우, 토큰을 local storage 에서 다시 가져와서 바인딩.
   useEffect(() => {
     const token = getToken();
