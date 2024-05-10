@@ -20,7 +20,7 @@ function MainPage() {
   const todayDate = new Date();
   const clickedDateString = dayjs(clickedDate).format('YYYY-MM-DD');
 
-  const { tokenPair, user } = useTokenAuth();
+  const { isLoggedIn } = useTokenAuth();
 
   const getAllSeatResponse = useGetAllSeat();
   const getAllReservationResponse = useGetAllReservation({
@@ -42,19 +42,19 @@ function MainPage() {
   });
 
   const createReservation = (seatId: number) => {
-    createReservationMutate({
-      ...tokenPair,
-      reservedAt: clickedDateString,
-      seatId,
-    });
+    // createReservationMutate({
+    //   ...tokenPair,
+    //   reservedAt: clickedDateString,
+    //   seatId,
+    // });
   };
 
   const cancelReservation = (seatId: number) => {
-    cancelReservationMutate({
-      ...tokenPair,
-      reservedAt: clickedDateString,
-      seatId,
-    });
+    // cancelReservationMutate({
+    //   ...tokenPair,
+    //   reservedAt: clickedDateString,
+    //   seatId,
+    // });
   };
 
   return (
@@ -87,7 +87,7 @@ function MainPage() {
                 currentDate={clickedDate}
                 seatList={getAllSeatResponse.list}
                 reservationList={getAllReservationResponse.list}
-                myself={user}
+                myself={undefined}
                 createReservation={createReservation}
                 cancelReservation={cancelReservation}
               />

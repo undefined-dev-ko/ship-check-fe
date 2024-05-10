@@ -13,7 +13,7 @@ function Reservation({
   currentDate: Date;
   seatList: Seat[];
   reservationList: ReservationType[];
-  myself: User;
+  myself?: User;
   createReservation: (seatId: number) => void;
   cancelReservation: (seatId: number) => void;
 }) {
