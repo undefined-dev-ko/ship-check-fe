@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { TokenPair, User } from '../types';
+import { useAtom } from 'jotai';
+import { IS_LOGGED_IN } from '../states/atoms';
 
 const extractUserFromAccessToken = (accessToken: string | undefined) => {
   if (!accessToken) {
@@ -15,7 +17,7 @@ const getToken = (): string | undefined => {
 
 /** #FIXME 로그아웃시 isLoggedIn이 제대로 false 처리가 안됨. Provider나 recoil로 변경해야할듯 */
 export const useTokenAuth = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useAtom(IS_LOGGED_IN);
 
   const storeToken = (token: TokenPair) => {
     localStorage.setItem('accessToken', token.accessToken);
@@ -30,8 +32,6 @@ export const useTokenAuth = () => {
 
     setIsLoggedIn(false);
   };
-
-  console.log(isLoggedIn);
 
   // 브라우저 refresh 하는 경우, 토큰을 local storage 에서 다시 가져와서 바인딩.
   useEffect(() => {
