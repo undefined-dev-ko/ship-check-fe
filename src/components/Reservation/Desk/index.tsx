@@ -1,23 +1,32 @@
 import { useState } from 'react';
 import { Item, Reservation, Seat, User } from '../../../types';
 import Styled from './index.styles';
+import { useCancelReservation, useCreateReservation } from '../../../api/query';
 
 function Desk({
+  currentDate,
   seat,
   reservation,
   myself,
-  createReservation,
-  cancelReservation,
 }: {
+  currentDate: string;
   seat: Seat | undefined;
   reservation: Reservation | undefined;
   myself?: User;
-  createReservation: (seatId: number) => void;
-  cancelReservation: (seatId: number) => void;
 }) {
   const [isHovering, setIsHovering] = useState(false);
   const handleMouseOver = () => setIsHovering(true);
   const handleMouseOut = () => setIsHovering(false);
+  const { mutate: createReservationMutate } = useCreateReservation({
+    seatId: seat.id,
+    reservedAt: currentDate,
+  });
+  const { mutate: cancelReservationMutate } = useCancelReservation({
+    seatId: seat.id,
+    reservedAt: currentDate,
+  });
+  const handleCreateReservation = () => createReservationMutate();
+  const handleCancelReservation = () => cancelReservationMutate();
 
   if (!seat) {
     return (
@@ -32,6 +41,7 @@ function Desk({
       />
     );
   }
+
   const { fixedUser, items } = seat;
 
   // 고정석
@@ -49,9 +59,7 @@ function Desk({
         handleMouseOut={handleMouseOut}
         name={reservation.user.name}
         team={reservation.user.team?.name || ''}
-        onClickCancelButton={() => {
-          isMine && cancelReservation(seat.id);
-        }}
+        onClickCancelButton={isMine && handleCancelReservation}
       />
     );
   }
@@ -63,9 +71,7 @@ function Desk({
         handleMouseOver={handleMouseOver}
         handleMouseOut={handleMouseOut}
         items={items}
-        onReserveButtonClick={() => {
-          createReservation(seat.id);
-        }}
+        onReserveButtonClick={handleCreateReservation}
       />
     );
   }

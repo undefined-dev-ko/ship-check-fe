@@ -1,5 +1,3 @@
-import { QueryKey, useQuery, useQueryClient } from '@tanstack/react-query';
-import { SendRequestOptions, client, sendRequest } from './client';
 import {
   GetTokenPairWithGoogleAuthResponse,
   GetTokenPairWithGoogleAuthRequest,
@@ -10,30 +8,8 @@ import {
   GetReservationListResponse,
   CancelReservationRequest,
 } from './interfaces';
-import { makeAuthorization } from './utils';
-
-function useAppQuery<T>({
-  queryKey,
-  requestOptions,
-  enabled = true,
-}: {
-  queryKey: QueryKey;
-  requestOptions: SendRequestOptions;
-  enabled?: boolean;
-}) {
-  const queryResult = useQuery<{ data: T }>({
-    queryKey,
-    queryFn: () => sendRequest(requestOptions),
-    enabled,
-  });
-  const queryClient = useQueryClient();
-
-  return {
-    ...queryResult,
-    data: queryResult.data?.data,
-    reset: () => queryClient.resetQueries({ queryKey, exact: true }),
-  };
-}
+import useAppQuery from '../hooks/useAppQuery';
+import useAppMutation from '../hooks/useAppMutation';
 
 function useGetAllSeat(): GetAllSeatResponse {
   const { data } = useAppQuery<GetAllSeatResponse>({
@@ -57,65 +33,44 @@ function useGetAllReservation({
   reservedAt: string;
 }): GetReservationListResponse {
   const { data } = useAppQuery<GetReservationListResponse>({
-    queryKey: ['reservations'],
+    queryKey: ['reservations', reservedAt],
     requestOptions: { method: 'GET', path: `/reservation/${reservedAt}` },
   });
   return data;
 }
-
-export { useGetAllSeat, useGetAllUser, useGetAllReservation };
-
-// 아래 함수들은 useAppMutation 훅 만들어서 새로 함수 선언할 예정입니다.
-
-async function getTokenPairWithGoogleAuth({
-  authorizationCode,
-}: GetTokenPairWithGoogleAuthRequest) {
-  const result = await client.post<GetTokenPairWithGoogleAuthResponse>(
-    '/auth/login/google',
-    {
-      authorizationCode,
+function useGetTokenPairWithGoogleAuth(
+  payload: GetTokenPairWithGoogleAuthRequest,
+  onSuccess: (data: any) => void,
+) {
+  return useAppMutation<GetTokenPairWithGoogleAuthResponse>({
+    requestOptions: {
+      method: 'POST',
+      path: '/auth/login/google',
+      data: payload,
     },
-  );
-  return result.data;
-}
-
-async function createReservation({
-  accessToken,
-  refreshToken,
-  ...rest
-}: CreateReservationRequest) {
-  const result = await client.post<CreateReservationResponse>(
-    '/reservation',
-    {
-      ...rest,
-    },
-    {
-      headers: {
-        ...makeAuthorization({ accessToken, refreshToken }),
-      },
-    },
-  );
-  return result.data;
-}
-
-async function cancelReservation({
-  accessToken,
-  refreshToken,
-  ...rest
-}: CancelReservationRequest) {
-  const result = await client.delete('/reservation', {
-    data: {
-      ...rest,
-    },
-    headers: {
-      ...makeAuthorization({ accessToken, refreshToken }),
-    },
+    onSuccess,
   });
-  return result;
 }
 
-export const RAW_QUERY = {
-  getTokenPairWithGoogleAuth,
-  createReservation,
-  cancelReservation,
+function useCreateReservation(payload: CreateReservationRequest) {
+  return useAppMutation<CreateReservationResponse>({
+    mutationKey: ['reservations'],
+    requestOptions: { method: 'POST', path: '/reservation', data: payload },
+  });
+}
+
+function useCancelReservation(payload: CancelReservationRequest) {
+  return useAppMutation<CancelReservationRequest>({
+    mutationKey: ['reservations'],
+    requestOptions: { method: 'DELETE', path: '/reservation', data: payload },
+  });
+}
+
+export {
+  useGetAllSeat,
+  useGetAllUser,
+  useGetAllReservation,
+  useGetTokenPairWithGoogleAuth,
+  useCreateReservation,
+  useCancelReservation,
 };

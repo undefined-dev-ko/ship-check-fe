@@ -20,7 +20,7 @@ export type GetAllSeatResponse = {
 export type CreateReservationRequest = {
   seatId: number;
   reservedAt: string;
-} & TokenPair;
+};
 export type CreateReservationResponse = Reservation;
 
 export type GetReservationListRequest = {} & TokenPair;
@@ -31,4 +31,4 @@ export type GetReservationListResponse = {
 export type CancelReservationRequest = {
   seatId: number;
   reservedAt: string;
-} & TokenPair;
+};
