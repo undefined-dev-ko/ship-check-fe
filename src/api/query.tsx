@@ -40,27 +40,30 @@ function useGetAllReservation({
 }
 function useGetTokenPairWithGoogleAuth(
   payload: GetTokenPairWithGoogleAuthRequest,
-  onSuccess: (data: any) => void,
 ) {
-  return useAppMutation<GetTokenPairWithGoogleAuthResponse>({
+  const res = useAppMutation<
+    GetTokenPairWithGoogleAuthRequest,
+    GetTokenPairWithGoogleAuthResponse
+  >({
     requestOptions: {
       method: 'POST',
       path: '/auth/login/google',
       data: payload,
     },
-    onSuccess,
+    onSuccess: payload?.onSuccess,
   });
+  return res;
 }
 
-function useCreateReservation(payload: CreateReservationRequest) {
-  return useAppMutation<CreateReservationResponse>({
+function useCreateReservation(payload?: CreateReservationRequest) {
+  return useAppMutation<CreateReservationRequest, CreateReservationResponse>({
     mutationKey: ['reservations'],
     requestOptions: { method: 'POST', path: '/reservation', data: payload },
   });
 }
 
-function useCancelReservation(payload: CancelReservationRequest) {
-  return useAppMutation<CancelReservationRequest>({
+function useCancelReservation(payload?: CancelReservationRequest) {
+  return useAppMutation<CancelReservationRequest, void>({
     mutationKey: ['reservations'],
     requestOptions: { method: 'DELETE', path: '/reservation', data: payload },
   });

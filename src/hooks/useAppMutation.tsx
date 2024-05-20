@@ -5,7 +5,7 @@ import {
 } from '@tanstack/react-query';
 import { SendRequestOptions, sendRequest } from '../api/client';
 
-export default function useAppMutation<T>({
+export default function useAppMutation<V, T>({
   mutationKey,
   requestOptions,
   onSuccess,
@@ -16,7 +16,7 @@ export default function useAppMutation<T>({
 }) {
   const queryClient = useQueryClient();
 
-  const mutationResult = useMutation<{ data: T }>({
+  const mutationResult = useMutation<{ data: T }, any, Partial<V>>({
     mutationKey,
     mutationFn: () => sendRequest(requestOptions),
     onSettled: () => {

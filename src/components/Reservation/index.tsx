@@ -1,9 +1,13 @@
 import Desk from './Desk';
 import Styled from './index.styles';
-
 import dayjs from 'dayjs';
 import { User } from '../../types';
-import { useGetAllReservation, useGetAllSeat } from '../../api/query';
+import {
+  useCancelReservation,
+  useCreateReservation,
+  useGetAllReservation,
+  useGetAllSeat,
+} from '../../api/query';
 
 function Reservation({ currentDate }: { currentDate: Date }) {
   const clickedDateString = dayjs(currentDate).format('YYYY-MM-DD');
@@ -14,6 +18,14 @@ function Reservation({ currentDate }: { currentDate: Date }) {
     useGetAllReservation({
       reservedAt: clickedDateString,
     }) ?? {};
+
+  const { mutate: createReservationMutate } = useCreateReservation();
+  const { mutate: cancelReservationMutate } = useCancelReservation();
+  const handleCreateReservation = (seatId: number) =>
+    createReservationMutate({ seatId, reservedAt: clickedDateString });
+
+  const handleCancelReservation = (seatId: number) =>
+    cancelReservationMutate({ seatId, reservedAt: clickedDateString });
 
   const myself: User = {
     id: 1,
@@ -40,6 +52,8 @@ function Reservation({ currentDate }: { currentDate: Date }) {
                 (v) => v.seat.deskNo === deskNo,
               )}
               myself={myself}
+              createReservation={handleCreateReservation}
+              cancelReservation={handleCancelReservation}
               key={i}
             />
           ))}

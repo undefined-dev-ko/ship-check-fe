@@ -9,16 +9,15 @@ export default function AuthGoogle() {
   const { storeToken } = useTokenAuth();
   const navigate = useNavigate();
 
-  const { mutate } = useGetTokenPairWithGoogleAuth(
-    { authorizationCode },
-    ({ data }) => {
+  const { mutate } = useGetTokenPairWithGoogleAuth({
+    onSuccess: (data) => {
       storeToken(data);
       navigate('/');
     },
-  );
+  });
 
   useEffect(() => {
-    mutate();
+    mutate({ authorizationCode });
   }, [authorizationCode, mutate]);
 
   return <></>;
