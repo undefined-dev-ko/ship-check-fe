@@ -10,8 +10,7 @@ export type GetTokenPairWithGoogleAuthResponse = {
   refreshToken: string;
 };
 
-export type GetAllUserRequest = {};
-export type GetAllUserResponse = Array<Pick<User, 'id' | 'email'>>;
+export type GetUserResponse = User;
 
 export type GetAllSeatRequest = {};
 export type GetAllSeatResponse = {

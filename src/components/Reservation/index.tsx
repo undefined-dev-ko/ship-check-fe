@@ -1,12 +1,12 @@
 import Desk from './Desk';
 import Styled from './index.styles';
 import dayjs from 'dayjs';
-import { User } from '../../types';
 import {
   useCancelReservation,
   useCreateReservation,
   useGetAllReservation,
   useGetAllSeat,
+  useGetUser,
 } from '../../api/query';
 
 function Reservation({ currentDate }: { currentDate: Date }) {
@@ -19,6 +19,8 @@ function Reservation({ currentDate }: { currentDate: Date }) {
       reservedAt: clickedDateString,
     }) ?? {};
 
+  const { data: myself } = useGetUser();
+
   const { mutate: createReservationMutate } = useCreateReservation();
   const { mutate: cancelReservationMutate } = useCancelReservation();
   const handleCreateReservation = (seatId: number) =>
@@ -26,16 +28,6 @@ function Reservation({ currentDate }: { currentDate: Date }) {
 
   const handleCancelReservation = (seatId: number) =>
     cancelReservationMutate({ seatId, reservedAt: clickedDateString });
-
-  const myself: User = {
-    id: 1,
-    email: 'test@test.com',
-    name: 'test',
-    photo: 'test',
-    reservations: [],
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  };
 
   if (!seatList || !reservationList) return <>loading</>;
 

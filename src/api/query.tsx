@@ -1,7 +1,7 @@
 import {
   GetTokenPairWithGoogleAuthResponse,
   GetTokenPairWithGoogleAuthRequest,
-  GetAllUserResponse,
+  GetUserResponse,
   GetAllSeatResponse,
   CreateReservationRequest,
   CreateReservationResponse,
@@ -19,12 +19,11 @@ function useGetAllSeat(): GetAllSeatResponse {
   return data;
 }
 
-function useGetAllUser(): GetAllUserResponse {
-  const { data } = useAppQuery<GetAllUserResponse>({
+function useGetUser() {
+  return useAppQuery<GetUserResponse>({
     queryKey: ['users'],
-    requestOptions: { method: 'GET', path: '/user' },
+    requestOptions: { method: 'GET', path: '/user/detail' },
   });
-  return data;
 }
 
 function useGetAllReservation({
@@ -73,7 +72,7 @@ function useCancelReservation(payload?: CancelReservationRequest) {
 
 export {
   useGetAllSeat,
-  useGetAllUser,
+  useGetUser,
   useGetAllReservation,
   useGetTokenPairWithGoogleAuth,
   useCreateReservation,
