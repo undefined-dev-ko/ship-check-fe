@@ -10,8 +10,8 @@ export default function AuthGoogle() {
   const navigate = useNavigate();
 
   const { mutate } = useGetTokenPairWithGoogleAuth({
-    onSuccess: (data) => {
-      storeToken(data);
+    onSuccess: ({ accessToken, refreshToken }) => {
+      storeToken({ accessToken, refreshToken });
       navigate('/');
     },
   });

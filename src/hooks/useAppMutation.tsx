@@ -16,13 +16,24 @@ export default function useAppMutation<V, T>({
 }) {
   const queryClient = useQueryClient();
 
+  const handleSuccess = (data: { data: any }) => {
+    if (onSuccess) {
+      onSuccess(data.data);
+    }
+  };
+
   const mutationResult = useMutation<{ data: T }, any, Partial<V>>({
     mutationKey,
-    mutationFn: () => sendRequest(requestOptions),
+    mutationFn: (payload) =>
+      sendRequest({
+        ...requestOptions,
+        data: payload,
+        path: requestOptions.path,
+      }),
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: mutationKey });
     },
-    onSuccess,
+    onSuccess: handleSuccess,
   });
 
   return { ...mutationResult, data: mutationResult.data?.data };

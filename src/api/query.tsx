@@ -38,21 +38,23 @@ function useGetAllReservation({
   });
   return data;
 }
-function useGetTokenPairWithGoogleAuth(
-  payload: GetTokenPairWithGoogleAuthRequest,
-) {
-  const res = useAppMutation<
+function useGetTokenPairWithGoogleAuth({
+  onSuccess,
+}: {
+  onSuccess?: (data: GetTokenPairWithGoogleAuthResponse) => void;
+}) {
+  const mutate = useAppMutation<
     GetTokenPairWithGoogleAuthRequest,
     GetTokenPairWithGoogleAuthResponse
   >({
     requestOptions: {
       method: 'POST',
       path: '/auth/login/google',
-      data: payload,
     },
-    onSuccess: payload?.onSuccess,
+    onSuccess: onSuccess,
   });
-  return res;
+
+  return mutate;
 }
 
 function useCreateReservation(payload?: CreateReservationRequest) {

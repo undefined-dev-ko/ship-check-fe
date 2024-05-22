@@ -11,7 +11,9 @@ const Container = styled.li<{ isHovering?: boolean; isMine?: boolean }>`
   border-radius: 16px;
   color: ${COLOR.white};
   box-shadow: ${(props) =>
-    props.isMine ? `0 0 0 8px ${COLOR.primaryGreen} inset` : ''};
+    props.isMine && !props.isHovering
+      ? `0 0 0 8px ${COLOR.primaryGreen} inset`
+      : ''};
 
   .text {
     font-weight: 600;
