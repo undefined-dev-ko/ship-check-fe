@@ -11,6 +11,7 @@ import {
 
 function Reservation({ currentDate }: { currentDate: Date }) {
   const clickedDateString = dayjs(currentDate).format('YYYY-MM-DD');
+  const isPassed = isBeforeToday(currentDate);
 
   const { list: seatList } = useGetAllSeat() ?? {};
 
@@ -38,7 +39,7 @@ function Reservation({ currentDate }: { currentDate: Date }) {
           .map((_, i) => i + 1) // 1 ~ 20 까지의 배열
           .map((deskNo, i) => (
             <Desk
-              currentDate={clickedDateString}
+              isPassed={isPassed}
               seat={seatList.find((e) => e.deskNo === deskNo)}
               reservation={reservationList.find(
                 (v) => v.seat.deskNo === deskNo,
@@ -52,6 +53,12 @@ function Reservation({ currentDate }: { currentDate: Date }) {
       </ul>
     </Styled.Container>
   );
+}
+
+function isBeforeToday(date: Date) {
+  const today = dayjs().startOf('day');
+  const inputDate = dayjs(date).startOf('day');
+  return inputDate.isBefore(today);
 }
 
 export default Reservation;

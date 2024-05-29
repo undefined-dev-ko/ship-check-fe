@@ -5,13 +5,14 @@ import Fixed from './fixed';
 import Reserved from './reserved';
 
 function Desk({
+  isPassed = false,
   seat,
   reservation,
   myself,
   createReservation,
   cancelReservation,
 }: {
-  currentDate: string;
+  isPassed: boolean;
   seat: Seat | undefined;
   reservation: Reservation | undefined;
   myself?: User;
@@ -45,6 +46,7 @@ function Desk({
     const isMine = myself ? myself.id === reservation.user.id : false;
     return (
       <Reserved
+        isPassed={isPassed}
         isHovering={isHovering}
         isMine={isMine}
         handleMouseOver={handleMouseOver}
@@ -61,6 +63,7 @@ function Desk({
   else {
     return (
       <Default
+        isPassed={isPassed}
         isHovering={isHovering}
         handleMouseOver={handleMouseOver}
         handleMouseOut={handleMouseOut}

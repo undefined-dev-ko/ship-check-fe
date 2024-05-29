@@ -1,6 +1,7 @@
 import Styled from './index.styles';
 
 function Reserved({
+  isPassed = false,
   isHovering,
   isMine,
   handleMouseOver,
@@ -9,6 +10,7 @@ function Reserved({
   team,
   onClickCancelButton,
 }: {
+  isPassed?: boolean;
   isHovering: boolean;
   isMine: boolean;
   handleMouseOver: () => void;
@@ -17,6 +19,15 @@ function Reserved({
   team: string; // 'backend' | 'frontend' | 'design' | 'etc';
   onClickCancelButton: () => void;
 }) {
+  if (isPassed) {
+    return (
+      <Styled.Container className="reserved" isMine={isMine}>
+        <p className="name">{name}</p>
+        <p className="team">{convertTeam(team)}</p>
+      </Styled.Container>
+    );
+  }
+
   return (
     <Styled.Container
       className="reserved"

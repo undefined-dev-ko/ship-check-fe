@@ -2,18 +2,24 @@ import Styled from './index.styles';
 import { Item } from '../../../types';
 
 function Default({
+  isPassed = false,
   isHovering,
   handleMouseOver,
   handleMouseOut,
   onReserveButtonClick,
   items = [],
 }: {
+  isPassed?: boolean;
   isHovering: boolean;
   handleMouseOver: () => void;
   handleMouseOut: () => void;
   items?: Item[];
   onReserveButtonClick: () => void;
 }) {
+  if (isPassed) {
+    return <Styled.Container className="default"></Styled.Container>;
+  }
+
   return (
     <Styled.Container
       className="default"
