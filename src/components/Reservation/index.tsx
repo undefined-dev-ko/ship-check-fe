@@ -30,8 +30,6 @@ function Reservation({ currentDate }: { currentDate: Date }) {
   const handleCancelReservation = (seatId: number) =>
     cancelReservationMutate({ seatId, reservedAt: clickedDateString });
 
-  if (!seatList || !reservationList) return <>loading</>;
-
   return (
     <Styled.Container>
       <ul className="seat-list">
@@ -40,10 +38,11 @@ function Reservation({ currentDate }: { currentDate: Date }) {
           .map((deskNo, i) => (
             <Desk
               isPassed={isPassed}
-              seat={seatList.find((e) => e.deskNo === deskNo)}
-              reservation={reservationList.find(
-                (v) => v.seat.deskNo === deskNo,
-              )}
+              seat={seatList && seatList.find((e) => e.deskNo === deskNo)}
+              reservation={
+                reservationList &&
+                reservationList.find((v) => v.seat.deskNo === deskNo)
+              }
               myself={myself}
               createReservation={handleCreateReservation}
               cancelReservation={handleCancelReservation}

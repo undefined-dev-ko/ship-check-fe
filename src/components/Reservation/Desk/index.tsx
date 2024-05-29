@@ -12,9 +12,9 @@ function Desk({
   createReservation,
   cancelReservation,
 }: {
-  isPassed: boolean;
-  seat: Seat | undefined;
-  reservation: Reservation | undefined;
+  isPassed?: boolean;
+  seat?: Seat;
+  reservation?: Reservation;
   myself?: User;
   createReservation: (seatId: number) => void;
   cancelReservation: (seatId: number) => void;
