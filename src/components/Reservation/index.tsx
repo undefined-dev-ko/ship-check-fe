@@ -6,10 +6,16 @@ import {
   useCreateReservation,
   useGetAllReservation,
   useGetAllSeat,
-  useGetUser,
 } from '../../api/query';
+import { User } from '../../types';
 
-function Reservation({ currentDate }: { currentDate: Date }) {
+function Reservation({
+  currentDate,
+  myself,
+}: {
+  currentDate: Date;
+  myself: User;
+}) {
   const clickedDateString = dayjs(currentDate).format('YYYY-MM-DD');
 
   const { list: seatList } = useGetAllSeat() ?? {};
@@ -18,8 +24,6 @@ function Reservation({ currentDate }: { currentDate: Date }) {
     useGetAllReservation({
       reservedAt: clickedDateString,
     }) ?? {};
-
-  const { data: myself } = useGetUser();
 
   const { mutate: createReservationMutate } = useCreateReservation();
   const { mutate: cancelReservationMutate } = useCancelReservation();
