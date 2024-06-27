@@ -56,6 +56,7 @@ function Reservation({
       <Desk
         currentDate={clickedDateString}
         seat={seat}
+        deskNo={deskNo}
         reservation={reservation}
         myself={myself}
         createReservation={seat ? handleCreateReservation : () => {}}
