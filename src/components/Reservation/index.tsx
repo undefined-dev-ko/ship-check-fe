@@ -10,6 +10,7 @@ import {
 import { Seat, Team, User } from '../../types';
 import useModal from '../../hooks/useModal';
 import CustomModal from '../Modal';
+import Loading from '../Loading';
 
 function Reservation({
   currentDate,
@@ -99,7 +100,9 @@ function Reservation({
       reservedAt: clickedDateString,
     }) || {};
 
-  const { mutateAsync: createReservationMutate } = useCreateReservation();
+  const { mutateAsync: createReservationMutate, isPending } =
+    useCreateReservation();
+
   const { mutate: cancelReservationMutate } = useCancelReservation();
 
   const handleCreateReservation = async (seatId: number) => {
@@ -125,20 +128,25 @@ function Reservation({
       reservationList && reservationList.find((v) => v.seat.deskNo === deskNo);
 
     return (
-      <Desk
-        currentDate={clickedDateString}
-        seat={seat}
-        deskNo={deskNo}
-        reservation={reservation}
-        myself={myself}
-        createReservation={seat ? handleCreateReservation : () => {}}
-        cancelReservation={seat ? handleCancelReservation : () => {}}
-        key={i}
-      />
+      <>
+        <Desk
+          currentDate={clickedDateString}
+          seat={seat}
+          deskNo={deskNo}
+          reservation={reservation}
+          myself={myself}
+          createReservation={seat ? handleCreateReservation : () => {}}
+          cancelReservation={seat ? handleCancelReservation : () => {}}
+          key={i}
+        />
+      </>
     );
   };
+
   return (
     <Styled.Container>
+      {isPending && <Loading />}
+
       <ul className="seat-list">
         {[...Array(15)]
           .map((_, i) => i + 1) // 1 ~ 15 까지의 배열
