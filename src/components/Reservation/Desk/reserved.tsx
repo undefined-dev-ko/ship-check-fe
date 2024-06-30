@@ -4,6 +4,7 @@ import Styled from './index.styles';
 function Reserved({
   isHovering,
   isMine,
+  isPassed,
   handleMouseOver,
   handleMouseOut,
   name,
@@ -13,6 +14,7 @@ function Reserved({
 }: {
   isHovering: boolean;
   isMine: boolean;
+  isPassed: boolean;
   handleMouseOver: () => void;
   handleMouseOut: () => void;
   name: string;
@@ -20,20 +22,21 @@ function Reserved({
   onClickCancelButton: () => void;
   isPendingCancel: boolean;
 }) {
+  const hoverActive = isMine && isHovering && !isPassed;
   return (
     <Styled.Container
       className="reserved"
-      $isHovering={isHovering}
+      $isHovering={hoverActive}
       isMine={isMine}
       onMouseOver={handleMouseOver}
       onMouseOut={handleMouseOut}
-      onClick={onClickCancelButton}
+      onClick={hoverActive ? onClickCancelButton : () => {}}
     >
       {isPendingCancel ? (
         <Loading />
       ) : (
         <>
-          {isMine && isHovering ? (
+          {hoverActive ? (
             <p className="text">예약 취소하기</p>
           ) : (
             <>
