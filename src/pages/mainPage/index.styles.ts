@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { media } from '../../styles/media';
 
 const Container = styled.div`
   background-color: #f4f4f4;
@@ -14,6 +15,10 @@ const MainPageContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: stretch;
+
+  ${media.mobile`
+    width: 100%;
+  `};
 `;
 
 const ContentHeader = styled.div`
