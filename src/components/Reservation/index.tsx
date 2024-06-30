@@ -10,7 +10,7 @@ import {
 import { Seat, Team, User } from '../../types';
 import useModal from '../../hooks/useModal';
 import CustomModal from '../Modal';
-import Loading from '../Loading';
+import { useState } from 'react';
 
 function Reservation({
   currentDate,
@@ -100,12 +100,25 @@ function Reservation({
       reservedAt: clickedDateString,
     }) || {};
 
-  const { mutateAsync: createReservationMutate, isPending } =
-    useCreateReservation();
+  const [selectedSeatId, setSelectedSeatId] = useState<number | null>(null);
 
-  const { mutate: cancelReservationMutate } = useCancelReservation();
+  const { mutateAsync: createReservationMutate, isPending: isPendingCreate } =
+    useCreateReservation({
+      onSuccess: () => {
+        setSelectedSeatId(null);
+      },
+    });
+
+  const { mutate: cancelReservationMutate, isPending: isPendingCancel } =
+    useCancelReservation({
+      onSuccess: () => {
+        setSelectedSeatId(null);
+      },
+    });
 
   const handleCreateReservation = async (seatId: number) => {
+    setSelectedSeatId(seatId);
+
     try {
       await createReservationMutate({ seatId, reservedAt: clickedDateString });
     } catch (error: any) {
@@ -119,8 +132,11 @@ function Reservation({
       }
     }
   };
-  const handleCancelReservation = (seatId: number) =>
+
+  const handleCancelReservation = (seatId: number) => {
+    setSelectedSeatId(seatId);
     cancelReservationMutate({ seatId, reservedAt: clickedDateString });
+  };
 
   const renderDesk = (deskNo: number, i: number) => {
     const seat = allSeatList && allSeatList.find((e) => e.deskNo === deskNo);
@@ -138,6 +154,8 @@ function Reservation({
           createReservation={seat ? handleCreateReservation : () => {}}
           cancelReservation={seat ? handleCancelReservation : () => {}}
           key={i}
+          isPendingCreate={isPendingCreate && selectedSeatId === seat?.id}
+          isPendingCancel={isPendingCancel && selectedSeatId === seat?.id}
         />
       </>
     );
@@ -145,8 +163,6 @@ function Reservation({
 
   return (
     <Styled.Container>
-      {isPending && <Loading />}
-
       <ul className="seat-list">
         {[...Array(15)]
           .map((_, i) => i + 1) // 1 ~ 15 까지의 배열

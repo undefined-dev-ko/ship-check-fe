@@ -1,53 +1,61 @@
 import styled from 'styled-components';
 
 const Container = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgb(255, 255, 255, 0.5);
+  display: grid;
+  place-content: center;
 
-  .wrapper {
+  .loader {
+    position: relative;
+    margin: auto;
+    width: 3rem;
+    border-radius: 100vmin;
+    overflow: hidden;
+    padding: 1.25rem;
+
+    &::before {
+      content: '';
+      display: block;
+      padding-top: 100%;
+    }
+  }
+
+  .circular {
+    width: 100%;
+    height: 100%;
     position: absolute;
-    top: 50%;
-    left: calc(50% - 100px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    inset: 0;
+    margin: auto;
+    transform-origin: center center;
+    animation: 2s linear 0s infinite rotate;
   }
-  .wrapper .loader {
-    display: flex;
-    justify-content: space-between;
-    padding: 0 20px;
+
+  .path {
+    stroke: #fff;
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+    stroke-linecap: round;
+    animation: 1.5s ease-in-out 0s infinite dash;
   }
-  .loader .loading {
-    background: #d2b0ff;
-    width: 20px;
-    height: 20px;
-    border-radius: 50px;
-    margin: 0 10px;
-    animation: load 0.7s ease infinite;
-  }
-  .loader .loading.one {
-    animation-delay: 0.3s;
-  }
-  .loader .loading.two {
-    animation-delay: 0.4s;
-  }
-  .loader .loading.three {
-    animation-delay: 0.5s;
-  }
-  @keyframes load {
+
+  @keyframes dash {
     0% {
-      width: 30px;
-      height: 30px;
+      stroke-dasharray: 1, 200;
+      stroke-dashoffset: 0;
     }
     50% {
-      width: 20px;
-      height: 20px;
+      stroke-dasharray: 89, 200;
+      stroke-dashoffset: -35px;
+      stroke: #fff;
+    }
+    100% {
+      stroke-dasharray: 89, 200;
+      stroke-dashoffset: -124px;
+    }
+  }
+
+  @keyframes rotate {
+    to {
+      transform: rotate(1turn);
     }
   }
 `;
