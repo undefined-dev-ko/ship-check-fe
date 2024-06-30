@@ -4,7 +4,10 @@ import { media } from '../../styles/media';
 const Container = styled.div`
   background-color: #f4f4f4;
   padding: 80px 80px 120px;
-  gap: 80px;
+
+  ${media.mobile`
+  padding: 25px 20px;
+  `};
 `;
 
 const MainPageContainer = styled.div`
@@ -18,6 +21,7 @@ const MainPageContainer = styled.div`
 
   ${media.mobile`
     width: 100%;
+    gap: 20px;
   `};
 `;
 
@@ -32,6 +36,11 @@ const ContentHeader = styled.div`
 
   background-color: #ffffff;
   border-radius: 24px;
+
+  ${media.mobile`
+    padding: 20px;
+    border-radius: 12px;
+  `};
 `;
 
 const ContentBody = styled.div`
@@ -42,6 +51,16 @@ const ContentBody = styled.div`
 
   border-radius: 24px;
   padding: 60px;
+
+  ${media.mobile`
+   padding: 20px 10px;
+   border-radius: 12px;
+  `};
 `;
 
-export default { Container, MainPageContainer, ContentHeader, ContentBody };
+export default {
+  Container,
+  MainPageContainer,
+  ContentHeader,
+  ContentBody,
+};
