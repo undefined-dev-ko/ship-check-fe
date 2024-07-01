@@ -29,7 +29,7 @@ function Desk({
   const handleMouseOver = () => setIsHovering(true);
   const handleMouseOut = () => setIsHovering(false);
 
-  const { fixedUser, items } = seat;
+  const { fixedUser, items } = seat || {};
 
   // 고정석
   if (fixedUser) {
