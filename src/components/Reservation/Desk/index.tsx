@@ -10,6 +10,7 @@ function Desk({
   reservation,
   myself,
   isActivated,
+  hasMadeReservation,
   createReservation,
   cancelReservation,
   isPendingCreate,
@@ -21,6 +22,7 @@ function Desk({
   reservation: Reservation | undefined;
   myself?: User;
   isActivated: boolean;
+  hasMadeReservation: boolean;
   createReservation: (seatId: number) => void;
   cancelReservation: (seatId: number) => void;
   isPendingCreate: boolean;
@@ -65,7 +67,7 @@ function Desk({
       <Default
         deskNo={deskNo}
         isHovering={isHovering}
-        isActivated={isActivated}
+        isActivated={isActivated && !hasMadeReservation}
         handleMouseOver={handleMouseOver}
         handleMouseOut={handleMouseOut}
         items={items}
