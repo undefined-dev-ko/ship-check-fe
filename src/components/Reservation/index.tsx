@@ -8,8 +8,6 @@ import {
   useGetAllSeat,
 } from '../../api/query';
 import { Seat, Team, User } from '../../types';
-import useModal from '../../hooks/useModal';
-import CustomModal from '../Modal';
 import { useState } from 'react';
 
 function Reservation({
@@ -20,7 +18,6 @@ function Reservation({
   myself: User;
 }) {
   const clickedDateString = dayjs(currentDate).format('YYYY-MM-DD');
-  const { isOpen, message, openModal, closeModal } = useModal();
 
   const { list: seatList = [] } = useGetAllSeat() || {};
 
@@ -102,8 +99,11 @@ function Reservation({
 
   const [selectedSeatId, setSelectedSeatId] = useState<number | null>(null);
   const isActivated = checkIfDayAfterToday(currentDate) && !selectedSeatId;
+  const hasMadeReservation = !!reservationList.find(
+    (e) => e.user.id === myself.id,
+  );
 
-  const { mutateAsync: createReservationMutate, isPending: isPendingCreate } =
+  const { mutate: createReservationMutate, isPending: isPendingCreate } =
     useCreateReservation({
       onSuccess: () => {
         setSelectedSeatId(null);
@@ -119,19 +119,7 @@ function Reservation({
 
   const handleCreateReservation = async (seatId: number) => {
     setSelectedSeatId(seatId);
-
-    try {
-      await createReservationMutate({ seatId, reservedAt: clickedDateString });
-    } catch (error: any) {
-      if (error.response.status === 409) {
-        openModal([
-          '이미 예약한 좌석이 있습니다.',
-          '예약 취소 후 새롭게 예약이 가능합니다.',
-        ]);
-      } else if (error.response.status === 400) {
-        openModal(['예약할 수 없는 좌석입니다.']);
-      }
-    }
+    createReservationMutate({ seatId, reservedAt: clickedDateString });
   };
 
   const handleCancelReservation = (seatId: number) => {
@@ -153,6 +141,7 @@ function Reservation({
           reservation={reservation}
           myself={myself}
           isActivated={isActivated}
+          hasMadeReservation={hasMadeReservation}
           createReservation={seat ? handleCreateReservation : () => {}}
           cancelReservation={seat ? handleCancelReservation : () => {}}
           key={i}
@@ -170,14 +159,6 @@ function Reservation({
           .map((_, i) => i + 1) // 1 ~ 15 까지의 배열
           .map((deskNo, i) => renderDesk(deskNo, i))}
       </ul>
-
-      <CustomModal isOpen={isOpen} onClose={closeModal}>
-        {message.map((m, i) => (
-          <>
-            <p key={i}>{m}</p>
-          </>
-        ))}
-      </CustomModal>
     </Styled.Container>
   );
 }
