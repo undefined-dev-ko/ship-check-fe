@@ -21,7 +21,6 @@ function Reservation({
 }) {
   const clickedDateString = dayjs(currentDate).format('YYYY-MM-DD');
   const { isOpen, message, openModal, closeModal } = useModal();
-  const isPassed = isBeforeToday(currentDate);
 
   const { list: seatList = [] } = useGetAllSeat() || {};
 
@@ -102,6 +101,7 @@ function Reservation({
     }) || {};
 
   const [selectedSeatId, setSelectedSeatId] = useState<number | null>(null);
+  const isActivated = checkIfDayAfterToday(currentDate) && !selectedSeatId;
 
   const { mutateAsync: createReservationMutate, isPending: isPendingCreate } =
     useCreateReservation({
@@ -152,7 +152,7 @@ function Reservation({
           deskNo={deskNo}
           reservation={reservation}
           myself={myself}
-          isPassed={isPassed}
+          isActivated={isActivated}
           createReservation={seat ? handleCreateReservation : () => {}}
           cancelReservation={seat ? handleCancelReservation : () => {}}
           key={i}
@@ -183,14 +183,14 @@ function Reservation({
 }
 
 /**
- * 오늘 날짜보다 이전 날짜인지 확인
+ * 선택한 날짜가 오늘 날짜 이후인지 확인
  * @param date 날짜
- * @returns
+ * @returns 오늘 이후면 true 반환
  */
-function isBeforeToday(date: Date) {
+function checkIfDayAfterToday(date: Date) {
   const today = dayjs().startOf('day');
   const inputDate = dayjs(date).startOf('day');
-  return inputDate.isBefore(today);
+  return !inputDate.isBefore(today);
 }
 
 export default Reservation;
