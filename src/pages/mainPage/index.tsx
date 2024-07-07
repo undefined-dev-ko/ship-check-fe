@@ -6,7 +6,13 @@ import Layout from '../../containers/Layout';
 import { useTokenAuth } from '../../hooks/useTokenAuth';
 import useWeekList from '../../hooks/useWeekList';
 import Styled from './index.styles';
-import { useGetUser } from '../../api/query';
+import { useGetUser, useRetrieveReservationList } from '../../api/query';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 function MainPage() {
   const { baseDate, dayNames, setBaseDate, weekList } = useWeekList();
@@ -17,6 +23,18 @@ function MainPage() {
   const { data: myself } = useGetUser({
     enabled: !!isLoggedIn,
   });
+
+  const { data: reservationListForDateRange } = useRetrieveReservationList({
+    startReservedAt: dayjs(clickedDate)
+      .subtract(2, 'week')
+      .format('YYYY-MM-DD'),
+    endReservedAt: dayjs(clickedDate).add(2, 'week').format('YYYY-MM-DD'),
+    enabled: !!myself,
+  });
+
+  const reservedDateList = reservationListForDateRange?.list
+    .filter((v) => v.userId === myself.id)
+    .map((v) => dayjs(v.reservedAt).tz('Asia/Seoul', true).toDate());
 
   return (
     <Layout>
@@ -31,10 +49,7 @@ function MainPage() {
               todayDate={todayDate}
               clickedDate={clickedDate}
               baseDate={baseDate}
-              reservedDateList={[
-                new Date(),
-                new Date('2024-04-12T05:00:00.000+09:00'),
-              ]}
+              reservedDateList={reservedDateList}
               setBaseDate={setBaseDate}
               dayNames={dayNames}
               weekList={weekList}
