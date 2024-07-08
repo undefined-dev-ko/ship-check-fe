@@ -11,7 +11,7 @@ const Footer = styled.footer`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 80px;
+  padding: 50px;
   color: ${COLOR.white};
   word-break: keep-all;
   white-space: nowrap;
@@ -82,7 +82,7 @@ const MemberList = styled.div`
 
 const Title = styled.div`
   color: ${COLOR.white};
-  font-size: 40px;
+  font-size: 22px;
   font-weight: 700;
 
   ${media.mobile`
