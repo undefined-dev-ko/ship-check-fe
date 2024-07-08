@@ -32,17 +32,14 @@ const Header = styled.div`
   }
 
   button.right_reset_button {
-    width: 70px;
-    box-sizing: border-box;
-    background: #ffffff;
-    border: 3px solid #f6f6f6;
-    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
-    border-radius: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    background-color: #c74eff;
+    color: #f5f5f5;
+    border: 0;
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 30px;
+    font-weight: 400;
     cursor: pointer;
-    font-size: medium;
   }
 `;
 
