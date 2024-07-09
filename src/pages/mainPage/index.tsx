@@ -24,11 +24,12 @@ function MainPage() {
     enabled: !!isLoggedIn,
   });
 
-  const { data: reservationListForDateRange } = useRetrieveReservationList({
-    startReservedAt: dayjs(clickedDate)
-      .subtract(2, 'week')
-      .format('YYYY-MM-DD'),
-    endReservedAt: dayjs(clickedDate).add(2, 'week').format('YYYY-MM-DD'),
+  const {
+    data: reservationListForDateRange,
+    refetch: refetchReservationListForDateRange,
+  } = useRetrieveReservationList({
+    startReservedAt: dayjs().format('YYYY-MM-DD'),
+    endReservedAt: dayjs().add(4, 'week').format('YYYY-MM-DD'),
     enabled: !!myself,
   });
 
@@ -55,6 +56,7 @@ function MainPage() {
               weekList={weekList}
               onDateClick={(date: Date) => {
                 setClickedDate(date);
+                refetchReservationListForDateRange();
               }}
             />
 
