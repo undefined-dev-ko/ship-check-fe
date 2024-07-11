@@ -56,7 +56,7 @@ const Container = styled.li<{ $isHovering?: boolean; isMine?: boolean }>`
     ${(props) => {
       if (!props.isMine)
         return css`
-          background: ${COLOR.primaryPurple};
+          background: #757cbf;
         `;
 
       if (props.$isHovering)
@@ -66,7 +66,7 @@ const Container = styled.li<{ $isHovering?: boolean; isMine?: boolean }>`
         `;
 
       return css`
-        background: #3443c9;
+        background: ${COLOR.primaryPurple};
         cursor: pointer;
       `;
     }}
