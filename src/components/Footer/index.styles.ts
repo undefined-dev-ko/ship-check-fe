@@ -9,7 +9,7 @@ const Container = styled.div`
 
 const Footer = styled.footer`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
   padding: 50px;
   color: ${COLOR.white};
@@ -24,6 +24,7 @@ const Footer = styled.footer`
     display: flex;
     flex-direction: column;
     gap: 40px;
+    flex: 1;
 
     ${media.mobile`
     gap: 20px;
@@ -91,8 +92,7 @@ const Title = styled.div`
 `;
 
 const CopyRight = styled.p`
-  display: flex;
-  align-items: flex-end;
+  text-align: right;
   color: ${COLOR.gray};
   width: 100%;
 
