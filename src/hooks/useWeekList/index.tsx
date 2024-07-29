@@ -30,32 +30,45 @@ const useWeekList = (initialDate = new Date()) => {
     )
     .filter((v) => !!v.length);
 
-  /** @deprecated 재활용 할 것이면 DateValue Type을 적용하십시오 */
-  const weekPrevMonthPadding: number[] = [
+  const weekPrevMonthPadding: DateValue[] = [
     ...new Array(MAX_DAY_LENTH - weekList[0].length),
   ]
     .map((_, i) => i + 1)
-    .map((dateDifference) =>
-      dayjs(baseDate).startOf('month').subtract(dateDifference, 'day').date(),
-    )
+    .map((dateDifference): DateValue => {
+      const calculatedDate = dayjs(baseDate)
+        .startOf('month')
+        .subtract(dateDifference, 'day')
+        .toDate();
+      return {
+        date: calculatedDate,
+        value: calculatedDate.getDate(),
+      };
+    })
     .reverse();
 
-  /** @deprecated 재활용 할 것이면 DateValue Type을 적용하십시오 */
-  const weekNextMonthPadding: number[] = [
+  const weekNextMonthPadding: DateValue[] = [
     ...new Array(MAX_DAY_LENTH - weekList[weekList.length - 1].length),
   ]
     .map((_, i) => i + 1)
-    .map((dateDifference) =>
-      dayjs(baseDate).endOf('month').add(dateDifference, 'day').date(),
-    );
+    .map((dateDifference): DateValue => {
+      const calculatedDate = dayjs(baseDate)
+        .endOf('month')
+        .add(dateDifference, 'day')
+        .toDate();
+      return {
+        date: calculatedDate,
+        value: calculatedDate.getDate(),
+      };
+    });
 
+  weekList[0] = weekPrevMonthPadding.concat(weekList[0]);
+  weekList[weekList.length - 1] =
+    weekList[weekList.length - 1].concat(weekNextMonthPadding);
   return {
     baseDate: baseDate,
     setBaseDate: setBaseDate,
     dayNames: DAY_NAMES,
     weekList,
-    weekPrevMonthPadding,
-    weekNextMonthPadding,
   };
 };
 
