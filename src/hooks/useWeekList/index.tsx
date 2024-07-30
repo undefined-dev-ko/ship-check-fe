@@ -2,7 +2,7 @@ import React from 'react';
 import dayjs from 'dayjs';
 
 const MAX_DATE_LENGTH = 35;
-const MAX_DAY_LENTH = 7;
+const MAX_DAY_LENGTH = 7;
 const DAY_NAMES = ['일', '월', '화', '수', '목', '금', '토'];
 type DateValue = {
   date: Date;
@@ -31,7 +31,7 @@ const useWeekList = (initialDate = new Date()) => {
     .filter((v) => !!v.length);
 
   const weekPrevMonthPadding: DateValue[] = [
-    ...new Array(MAX_DAY_LENTH - weekList[0].length),
+    ...new Array(MAX_DAY_LENGTH - weekList[0].length),
   ]
     .map((_, i) => i + 1)
     .map((dateDifference): DateValue => {
@@ -47,7 +47,7 @@ const useWeekList = (initialDate = new Date()) => {
     .reverse();
 
   const weekNextMonthPadding: DateValue[] = [
-    ...new Array(MAX_DAY_LENTH - weekList[weekList.length - 1].length),
+    ...new Array(MAX_DAY_LENGTH - weekList[weekList.length - 1].length),
   ]
     .map((_, i) => i + 1)
     .map((dateDifference): DateValue => {
