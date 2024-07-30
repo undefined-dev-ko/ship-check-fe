@@ -61,9 +61,6 @@ const useWeekList = (initialDate = new Date()) => {
       };
     });
 
-  weekList[0] = weekPrevMonthPadding.concat(weekList[0]);
-  weekList[weekList.length - 1] =
-    weekList[weekList.length - 1].concat(weekNextMonthPadding);
   return {
     baseDate: baseDate,
     setBaseDate: setBaseDate,

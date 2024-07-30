@@ -101,7 +101,10 @@ function Calendar({
 
           {weekList.map((week, i) => {
             return (
-              <Styled.FlexHorizontal key={i}>
+              <Styled.FlexHorizontal
+                key={i}
+                style={i === 0 ? { justifyContent: 'flex-end' } : {}}
+              >
                 {week.map((day) => {
                   const date = day.date;
                   const dateYYYYMMDD = dateToYYYYMMDD(date);
