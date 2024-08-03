@@ -42,24 +42,27 @@ function MainPage() {
       <Styled.Container>
         <Styled.MainPageContainer>
           <Styled.ContentHeader>
-            <Notice />
+            <Styled.HeaderLeft>
+              <Notice />
+            </Styled.HeaderLeft>
+            <Styled.HeaderRight>
+              <Calendar
+                todayDate={todayDate}
+                clickedDate={clickedDate}
+                baseDate={baseDate}
+                reservedDateList={reservedDateList}
+                setBaseDate={setBaseDate}
+                dayNames={dayNames}
+                weekList={weekList}
+                onDateClick={(date: Date) => {
+                  setClickedDate(date);
+                  isLoggedIn && refetchReservationListForDateRange();
+                }}
+              />
+            </Styled.HeaderRight>
           </Styled.ContentHeader>
 
           <Styled.ContentBody>
-            <Calendar
-              todayDate={todayDate}
-              clickedDate={clickedDate}
-              baseDate={baseDate}
-              reservedDateList={reservedDateList}
-              setBaseDate={setBaseDate}
-              dayNames={dayNames}
-              weekList={weekList}
-              onDateClick={(date: Date) => {
-                setClickedDate(date);
-                isLoggedIn && refetchReservationListForDateRange();
-              }}
-            />
-
             {isLoggedIn && myself && (
               <Reservation currentDate={clickedDate} myself={myself} />
             )}
