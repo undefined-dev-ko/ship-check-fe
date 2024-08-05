@@ -13,7 +13,7 @@ const Container = styled.div`
 const MainPageContainer = styled.div`
   margin: 0 auto;
   width: 1280px;
-  gap: 20px;
+  gap: 30px;
 
   display: flex;
   flex-direction: column;
@@ -30,7 +30,7 @@ const ContentHeader = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  gap: 20px;
+
   ${media.mobile`
   justify-content: center;
    `};
@@ -39,9 +39,10 @@ const ContentHeader = styled.div`
 const HeaderLeft = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  /* justify-content: space-between; */
+  gap: 20px;
 
-  width: 100%;
+  /* width: 100%; */
   height: 100%;
   ${media.mobile`
       display: none;

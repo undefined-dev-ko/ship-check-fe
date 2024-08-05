@@ -10,6 +10,9 @@ import { useGetUser, useRetrieveReservationList } from '../../api/query';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
+import SimpleSlider from '../../components/Slider';
+import Ranking from '../../components/Ranking';
+import ElmoJudgement from '../../components/ElmoJudgement';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -44,6 +47,9 @@ function MainPage() {
           <Styled.ContentHeader>
             <Styled.HeaderLeft>
               <Notice />
+              <SimpleSlider
+                contents={[<Ranking />, <ElmoJudgement nameList={[]} />]}
+              />
             </Styled.HeaderLeft>
             <Styled.HeaderRight>
               <Calendar
