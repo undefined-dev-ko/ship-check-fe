@@ -6,10 +6,15 @@ const Container = styled.div`
   flex-direction: column;
   background-color: #fff;
   gap: 16px;
+
+  border-radius: 24px;
+  ${media.mobile`
+    padding: 20px;
+    border-radius: 12px;
+  `};
 `;
 
 const Header = styled.div`
-  width: 100%;
   font-family: Poppins;
   font-size: 30px;
   font-weight: 600;
