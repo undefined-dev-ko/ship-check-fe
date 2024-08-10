@@ -154,11 +154,23 @@ function Reservation({
 
   return (
     <Styled.Container>
-      <ul className="seat-list">
-        {[...Array(15)]
-          .map((_, i) => i + 1) // 1 ~ 15 까지의 배열
-          .map((deskNo, i) => renderDesk(deskNo, i))}
-      </ul>
+      <Styled.SeatContainer>
+        <Styled.SeatList>
+          {[...Array(5)]
+            .map((_, i) => i + 1) // 1 ~ 15 까지의 배열
+            .map((deskNo, i) => renderDesk(deskNo, i))}
+        </Styled.SeatList>
+        <Styled.SeatList>
+          {[...Array(5)]
+            .map((_, i) => i + 6) // 1 ~ 15 까지의 배열
+            .map((deskNo, i) => renderDesk(deskNo, i))}
+        </Styled.SeatList>
+        <Styled.SeatList>
+          {[...Array(5)]
+            .map((_, i) => i + 11) // 1 ~ 15 까지의 배열
+            .map((deskNo, i) => renderDesk(deskNo, i))}
+        </Styled.SeatList>
+      </Styled.SeatContainer>
     </Styled.Container>
   );
 }
