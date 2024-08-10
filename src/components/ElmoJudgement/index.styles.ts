@@ -13,17 +13,25 @@ const BackgroundImage = styled.img`
   border-radius: 24px;
 `;
 
+const Message = styled.p`
+  position: absolute;
+  top: 40%;
+  left: 51%;
+  transform: translateX(-50%);
+  color: #ffffff;
+`;
+
 const NameListContainer = styled.div`
   width: 100%;
-  height: 100%;
-  position: absolute;
 
+  position: absolute;
   box-sizing: border-box;
   padding: 30px;
   display: flex;
+  justify-content: center;
+  align-items: flex-start;
   flex-wrap: wrap;
-  gap: 5px;
-  color: #ffffff;
+  gap: 20px;
 `;
 
 const NameTag = styled.div`
@@ -34,6 +42,7 @@ const NameTag = styled.div`
 export default {
   Container,
   BackgroundImage,
+  Message,
   NameListContainer,
   NameTag,
 };
