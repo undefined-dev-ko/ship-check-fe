@@ -7,9 +7,10 @@ const Container = styled.div`
   background-color: #fff;
   gap: 16px;
 
+  padding: 20px;
   border-radius: 24px;
+
   ${media.mobile`
-    padding: 20px;
     border-radius: 12px;
   `};
 `;
