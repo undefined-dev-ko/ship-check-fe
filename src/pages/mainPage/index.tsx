@@ -8,6 +8,7 @@ import useWeekList from '../../hooks/useWeekList';
 import Styled from './index.styles';
 import {
   useGetJudgements,
+  useGetRankingSummary,
   useGetUser,
   useRetrieveReservationList,
 } from '../../api/query';
@@ -45,6 +46,11 @@ function MainPage() {
       enabled: isLoggedIn,
     });
 
+  const { data: rankingSummaryResponse } = useGetRankingSummary({
+    reservedMonth: dayjs(clickedDate).format('YYYY-MM'),
+    enabled: isLoggedIn,
+  });
+
   const reservedDateList = reservationListForDateRange?.list
     .filter((v) => v.userId === myself.id)
     .map((v) => dayjs(v.reservedAt).tz('Asia/Seoul', true).toDate());
@@ -58,7 +64,11 @@ function MainPage() {
               <Notice />
               <SimpleSlider
                 contents={[
-                  <Ranking />,
+                  <Ranking
+                    attendance={rankingSummaryResponse?.attendance}
+                    ghost={rankingSummaryResponse?.ghost}
+                    cancel={rankingSummaryResponse?.cancel}
+                  />,
                   <ElmoJudgement
                     nameList={judgementsResponse?.userNames || []}
                   />,
