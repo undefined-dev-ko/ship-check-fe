@@ -67,30 +67,26 @@ const SeatItem = styled.div`
   }
 `;
 
-const EmptySeatItem = styled(SeatItem)<{ isReserveUI: boolean }>`
-  background-color: ${({ isReserveUI }) =>
-    isReserveUI ? COLOR.primaryGreen : COLOR.gray};
+const EmptySeatItem = styled(SeatItem)`
+  background-color: ${COLOR.gray};
+`;
 
-  .reserve {
-    ${media.mobile`
-    font-size: 16px;
-  `};
-  }
-
-  .desk-no {
-    ${media.mobile`
-    font-size: 25px;
-  `};
-  }
+const ReserveSeatItem = styled(SeatItem)`
+  background-color: ${COLOR.primaryGreen};
+  font-size: 16px;
 `;
 
 const FixedSeatItem = styled(SeatItem)`
   background-color: ${COLOR.gray};
+  font-size: 25px;
 `;
 
-const ReservedSeatItem = styled(SeatItem)<{ isCancelUI: boolean }>`
-  background-color: ${({ isCancelUI }) =>
-    isCancelUI ? COLOR.primaryRed : COLOR.primaryPurple};
+const ReservedSeatItem = styled(SeatItem)`
+  background-color: ${COLOR.primaryPurple};
+`;
+
+const CancelSeatItem = styled(SeatItem)`
+  background-color: ${COLOR.primaryRed};
 `;
 
 export default {
@@ -99,6 +95,8 @@ export default {
   SeatContainer,
   SeatList,
   EmptySeatItem,
+  ReserveSeatItem,
   FixedSeatItem,
   ReservedSeatItem,
+  CancelSeatItem,
 };

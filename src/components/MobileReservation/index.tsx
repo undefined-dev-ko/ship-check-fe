@@ -1,6 +1,11 @@
 import Styled from './index.styles';
 import dayjs from 'dayjs';
-import { useGetAllReservation, useGetAllSeat } from '../../api/query';
+import {
+  useCancelReservation,
+  useCreateReservation,
+  useGetAllReservation,
+  useGetAllSeat,
+} from '../../api/query';
 import { User } from '../../types';
 import { fixedSeatList } from '../../constants/fixedSeatList';
 import SeatItem from './SeatItem';
@@ -27,47 +32,52 @@ export default function MobileReservation({
       reservedAt: clickedDateString,
     }) || {};
 
-  // 예약하기 UI 가 보여지는 seatId
-  const [reserveUISeatId, setReserveUISeatId] = useState<number>();
+  const [selectedSeatId, setSelectedSeatId] = useState<number | null>(null);
 
-  // 취소하기 UI 가 보여지는 seatId
-  const [cancelUISeatId, setCancelUISeatId] = useState<number>();
+  const { mutate: createReservation, isPending: isPendingCreate } =
+    useCreateReservation({
+      onSuccess: () => {
+        setSelectedSeatId(null);
+      },
+    });
 
-  const handleShowReserveUI = (seatId: number) => {
-    setReserveUISeatId(seatId);
+  const { mutate: cancelReservation, isPending: isPendingCancel } =
+    useCancelReservation({
+      onSuccess: () => {
+        setSelectedSeatId(null);
+      },
+    });
+
+  const handleSelectSeat = (seatId: number) => {
+    setSelectedSeatId(seatId);
   };
 
-  const handleShowCancelUI = (seatId: number) => {
-    setCancelUISeatId(seatId);
+  const handleCreateReservation = (seatId: number) => {
+    createReservation({ seatId, reservedAt: clickedDateString });
   };
 
-  const { targetElementRef: seatItemRef } = useClickOutsideOfElement({
-    onClickOutside: () => {
-      // seat item 외부 클릭 시, 예약하기 UI, 취소하기 UI 초기화.
-      setReserveUISeatId(undefined);
-      setCancelUISeatId(undefined);
-    },
+  const handleCancelReservation = (seatId: number) => {
+    cancelReservation({ seatId, reservedAt: clickedDateString });
+  };
+
+  const { targetElementRef } = useClickOutsideOfElement({
+    onClickOutside: () => setSelectedSeatId(null),
   });
 
   return (
     <Styled.Wrapper>
       <Styled.Container>
-        <Styled.SeatList>
+        <Styled.SeatList ref={targetElementRef}>
           {allSeatList.map((seat, i) => (
-            <div
-              ref={seatItemRef}
-              className="seat-item-wrapper"
-              key={`seat-item-${i}`}
-            >
-              <SeatItem
-                seat={seat}
-                reservation={reservationList.find((r) => r.seatId === seat.id)}
-                isReserveUI={reserveUISeatId === seat.id}
-                handleShowReserveUI={handleShowReserveUI}
-                isCancelUI={cancelUISeatId === seat.id}
-                handleShowCancelUI={handleShowCancelUI}
-              />
-            </div>
+            <SeatItem
+              key={`seat-${i}`}
+              seat={seat}
+              reservation={reservationList.find((r) => r.seatId === seat.id)}
+              isSelected={selectedSeatId === seat.id}
+              handleSelectSeat={handleSelectSeat}
+              createReservation={handleCreateReservation}
+              cancelReservation={handleCancelReservation}
+            />
           ))}
         </Styled.SeatList>
       </Styled.Container>

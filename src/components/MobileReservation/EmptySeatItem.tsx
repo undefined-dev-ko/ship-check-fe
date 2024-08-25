@@ -4,20 +4,26 @@ import Styled from './index.styles';
 function EmptySeatItem({
   seat,
   isReserveUI,
-  onClick,
+  createReservation,
+  selectSeat,
 }: {
   seat: Seat | undefined;
   isReserveUI: boolean;
-  onClick: () => void;
+  createReservation: () => void;
+  selectSeat: () => void;
 }) {
   return (
-    <Styled.EmptySeatItem isReserveUI={isReserveUI} onClick={onClick}>
+    <>
       {isReserveUI ? (
-        <span className="reserve">예약하기</span>
+        <Styled.ReserveSeatItem onClick={createReservation}>
+          <span>예약하기</span>
+        </Styled.ReserveSeatItem>
       ) : (
-        <span className="desk-no">{seat.deskNo}</span>
+        <Styled.EmptySeatItem onClick={selectSeat}>
+          <span>{seat.deskNo}</span>
+        </Styled.EmptySeatItem>
       )}
-    </Styled.EmptySeatItem>
+    </>
   );
 }
 

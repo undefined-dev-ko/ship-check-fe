@@ -6,17 +6,17 @@ import Styled from './index.styles';
 function SeatItem({
   seat,
   reservation,
-  isReserveUI,
-  handleShowReserveUI,
-  isCancelUI,
-  handleShowCancelUI,
+  isSelected,
+  handleSelectSeat,
+  createReservation,
+  cancelReservation,
 }: {
   seat: Seat | undefined;
   reservation: Reservation | undefined;
-  isReserveUI: boolean;
-  handleShowReserveUI: (seatId: number) => void;
-  isCancelUI: boolean;
-  handleShowCancelUI: (seatId: number) => void;
+  isSelected: boolean;
+  handleSelectSeat: (seatId: number) => void;
+  createReservation: (seatId: number) => void;
+  cancelReservation: (seatId: number) => void;
 }) {
   const isFixedSeat = !!seat?.fixedUser;
 
@@ -30,8 +30,9 @@ function SeatItem({
       {emptySeat && (
         <EmptySeatItem
           seat={seat}
-          isReserveUI={isReserveUI}
-          onClick={() => handleShowReserveUI(seat?.id)}
+          isReserveUI={isSelected}
+          createReservation={() => createReservation(seat?.id)}
+          selectSeat={() => handleSelectSeat(seat?.id)}
         />
       )}
 
@@ -48,8 +49,9 @@ function SeatItem({
       {hasReservation && (
         <ReservedSeatItem
           reservation={reservation}
-          isCancelUI={isCancelUI}
-          onClick={() => handleShowCancelUI(seat?.id)}
+          isCancelUI={isSelected}
+          cancelReservation={() => cancelReservation(seat?.id)}
+          selectSeat={() => handleSelectSeat(seat?.id)}
         />
       )}
     </>

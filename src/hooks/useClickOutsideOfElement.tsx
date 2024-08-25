@@ -1,4 +1,4 @@
-import { RefObject, useEffect, useRef } from "react";
+import { RefObject, useEffect, useRef } from 'react';
 
 export default function useClickOutsideOfElement({
   onClickOutside,
@@ -22,7 +22,7 @@ export default function useClickOutsideOfElement({
       if (
         targetElementRef.current.contains(e.target as Node) ||
         includeElementRefList?.some((ref) =>
-          ref.current?.contains(e.target as Node)
+          ref.current?.contains(e.target as Node),
         )
       ) {
         onClickInside && onClickInside();
@@ -31,10 +31,10 @@ export default function useClickOutsideOfElement({
       }
     };
 
-    document.addEventListener("mousedown", handleOutsideClick);
+    document.addEventListener('mousedown', handleOutsideClick);
 
     return () => {
-      document.removeEventListener("mousedown", handleOutsideClick);
+      document.removeEventListener('mousedown', handleOutsideClick);
     };
   }, [targetElementRef, onClickOutside, onClickInside, includeElementRefList]);
 

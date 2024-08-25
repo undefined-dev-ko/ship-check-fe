@@ -4,23 +4,27 @@ import Styled from './index.styles';
 function ReservedSeatItem({
   reservation,
   isCancelUI,
-  onClick,
+  cancelReservation,
+  selectSeat,
 }: {
   reservation: Reservation | undefined;
   isCancelUI: boolean;
-  onClick: () => void;
+  cancelReservation: () => void;
+  selectSeat: () => void;
 }) {
   return (
-    <Styled.ReservedSeatItem isCancelUI={isCancelUI} onClick={onClick}>
+    <>
       {isCancelUI ? (
-        <span className="cancel">취소하기</span>
+        <Styled.CancelSeatItem onClick={cancelReservation}>
+          <span className="cancel">취소하기</span>
+        </Styled.CancelSeatItem>
       ) : (
-        <>
+        <Styled.ReservedSeatItem onClick={selectSeat}>
           <span className="name">{reservation?.user.name}</span>
           <span className="team">{reservation?.user.team.name}</span>
-        </>
+        </Styled.ReservedSeatItem>
       )}
-    </Styled.ReservedSeatItem>
+    </>
   );
 }
 
