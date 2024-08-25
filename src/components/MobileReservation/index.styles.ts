@@ -81,8 +81,9 @@ const FixedSeatItem = styled(SeatItem)`
   font-size: 25px;
 `;
 
-const ReservedSeatItem = styled(SeatItem)`
-  background-color: ${COLOR.primaryPurple};
+const ReservedSeatItem = styled(SeatItem)<{ isMyReservation: boolean }>`
+  background-color: ${({ isMyReservation }) =>
+    isMyReservation ? COLOR.primaryPurple : '#757cbf'};
 `;
 
 const CancelSeatItem = styled(SeatItem)`

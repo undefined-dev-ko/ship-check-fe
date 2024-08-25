@@ -14,10 +14,10 @@ import useClickOutsideOfElement from '../../hooks/useClickOutsideOfElement';
 
 export default function MobileReservation({
   currentDate,
-  myself,
+  userInfo,
 }: {
   currentDate: Date;
-  myself: User;
+  userInfo?: User;
 }) {
   const clickedDateString = dayjs(currentDate).format('YYYY-MM-DD');
 
@@ -72,11 +72,13 @@ export default function MobileReservation({
             <SeatItem
               key={`seat-${i}`}
               seat={seat}
+              userInfo={userInfo}
               reservation={reservationList.find((r) => r.seatId === seat.id)}
               isSelected={selectedSeatId === seat.id}
               handleSelectSeat={handleSelectSeat}
               createReservation={handleCreateReservation}
               cancelReservation={handleCancelReservation}
+              isPending={isPendingCreate || isPendingCancel}
             />
           ))}
         </Styled.SeatList>

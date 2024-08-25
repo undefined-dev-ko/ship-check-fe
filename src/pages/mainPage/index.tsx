@@ -90,7 +90,7 @@ function MainPage() {
           {isLoggedIn &&
             myself &&
             (isMobile ? (
-              <MobileReservation currentDate={clickedDate} myself={myself} />
+              <MobileReservation currentDate={clickedDate} userInfo={myself} />
             ) : (
               <Reservation currentDate={clickedDate} myself={myself} />
             ))}

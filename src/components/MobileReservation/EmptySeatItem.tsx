@@ -1,14 +1,17 @@
 import { Seat } from '../../types';
+import Loading from '../Loading';
 import Styled from './index.styles';
 
 function EmptySeatItem({
   seat,
   isReserveUI,
+  isPending,
   createReservation,
   selectSeat,
 }: {
   seat: Seat | undefined;
   isReserveUI: boolean;
+  isPending: boolean;
   createReservation: () => void;
   selectSeat: () => void;
 }) {
@@ -16,7 +19,7 @@ function EmptySeatItem({
     <>
       {isReserveUI ? (
         <Styled.ReserveSeatItem onClick={createReservation}>
-          <span>예약하기</span>
+          {isPending ? <Loading /> : <span>예약하기</span>}
         </Styled.ReserveSeatItem>
       ) : (
         <Styled.EmptySeatItem onClick={selectSeat}>
