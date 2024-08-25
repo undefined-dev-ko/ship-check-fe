@@ -30,7 +30,7 @@ const SeatContainer = styled.div`
   }
 `;
 
-const SeatList = styled.ul`
+const SeatList = styled.div`
   ${media.mobile`
   display: flex;
   flex-wrap: wrap;
@@ -38,8 +38,7 @@ const SeatList = styled.ul`
   `};
 `;
 
-const SeatItem = styled.li<{ $isHovering?: boolean; isMine?: boolean }>`
-  ${media.mobile`
+const SeatItem = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -47,13 +46,11 @@ const SeatItem = styled.li<{ $isHovering?: boolean; isMine?: boolean }>`
   border-radius: 16px;
   color: ${COLOR.white};
   cursor: default;
-  background-color: #eee;
   width: 90px;
   height: 60px;
   max-width: 222.4px;
   max-height: 120px;
   border-radius: 8px;
-  `};
 
   .name {
     ${media.mobile`
@@ -68,6 +65,17 @@ const SeatItem = styled.li<{ $isHovering?: boolean; isMine?: boolean }>`
     line-height: 20px;
   `};
   }
+`;
+
+const EmptySeatItem = styled(SeatItem)<{ isReserveUI: boolean }>`
+  background-color: ${({ isReserveUI }) =>
+    isReserveUI ? COLOR.primaryGreen : COLOR.gray};
+
+  .reserve {
+    ${media.mobile`
+    font-size: 16px;
+  `};
+  }
 
   .desk-no {
     ${media.mobile`
@@ -76,10 +84,21 @@ const SeatItem = styled.li<{ $isHovering?: boolean; isMine?: boolean }>`
   }
 `;
 
+const FixedSeatItem = styled(SeatItem)`
+  background-color: ${COLOR.gray};
+`;
+
+const ReservedSeatItem = styled(SeatItem)<{ isCancelUI: boolean }>`
+  background-color: ${({ isCancelUI }) =>
+    isCancelUI ? COLOR.primaryRed : COLOR.primaryPurple};
+`;
+
 export default {
   Wrapper,
   Container,
   SeatContainer,
   SeatList,
-  SeatItem,
+  EmptySeatItem,
+  FixedSeatItem,
+  ReservedSeatItem,
 };

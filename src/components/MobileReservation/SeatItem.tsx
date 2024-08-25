@@ -1,12 +1,22 @@
 import { Reservation, Seat } from '../../types';
+import EmptySeatItem from './EmptySeatItem';
+import ReservedSeatItem from './ReservedSeatItem';
 import Styled from './index.styles';
 
 function SeatItem({
   seat,
   reservation,
+  isReserveUI,
+  handleShowReserveUI,
+  isCancelUI,
+  handleShowCancelUI,
 }: {
   seat: Seat | undefined;
   reservation: Reservation | undefined;
+  isReserveUI: boolean;
+  handleShowReserveUI: (seatId: number) => void;
+  isCancelUI: boolean;
+  handleShowCancelUI: (seatId: number) => void;
 }) {
   const isFixedSeat = !!seat?.fixedUser;
 
@@ -16,21 +26,32 @@ function SeatItem({
 
   return (
     <>
-      <Styled.SeatItem>
-        {emptySeat && <span className="desk-no">{seat.deskNo}</span>}
+      {/* 예약이 없는 기본 좌석 */}
+      {emptySeat && (
+        <EmptySeatItem
+          seat={seat}
+          isReserveUI={isReserveUI}
+          onClick={() => handleShowReserveUI(seat?.id)}
+        />
+      )}
 
-        {isFixedSeat && (
-          <>
-            {seat?.fixedUser.name} {seat?.fixedUser.team.name}
-          </>
-        )}
+      {/* 고정 좌석 */}
+      {isFixedSeat && (
+        <Styled.FixedSeatItem>
+          <span className="name">{seat?.fixedUser.name}</span>
 
-        {hasReservation && (
-          <>
-            {reservation?.user.name} {reservation?.user.team.name}
-          </>
-        )}
-      </Styled.SeatItem>
+          <span className="team">{seat?.fixedUser.team.name}</span>
+        </Styled.FixedSeatItem>
+      )}
+
+      {/* 예약된 좌석 */}
+      {hasReservation && (
+        <ReservedSeatItem
+          reservation={reservation}
+          isCancelUI={isCancelUI}
+          onClick={() => handleShowCancelUI(seat?.id)}
+        />
+      )}
     </>
   );
 }
