@@ -29,7 +29,7 @@ function ReservedSeatItem({
           isMyReservation={isMyReservation}
         >
           <span className="name">{reservation?.user.name}</span>
-          <span className="team">{reservation?.user.team.name}</span>
+          <span className="team">{reservation?.user.team?.name}</span>
         </Styled.ReservedSeatItem>
       )}
     </>
