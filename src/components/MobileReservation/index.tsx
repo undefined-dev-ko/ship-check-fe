@@ -48,7 +48,14 @@ export default function MobileReservation({
       },
     });
 
+  const alreadyReservedSeat = reservationList.find(
+    (reservation) => reservation.userId === userInfo?.id,
+  );
+
   const handleSelectSeat = (seatId: number) => {
+    // 이미 예약한 좌석이 있는 경우, 예약한 시트의 선택(취소)외에는 선택 방지 (중복 예약방지)
+    if (alreadyReservedSeat && alreadyReservedSeat.seatId !== seatId) return;
+
     setSelectedSeatId(seatId);
   };
 
