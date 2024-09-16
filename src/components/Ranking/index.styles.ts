@@ -7,4 +7,9 @@ const Container = styled.div`
   width: 100%;
 `;
 
-export default { Container };
+const Loading = styled(Container)`
+  align-items: flex-end;
+  height: 325px;
+`;
+
+export default { Container, Loading };
